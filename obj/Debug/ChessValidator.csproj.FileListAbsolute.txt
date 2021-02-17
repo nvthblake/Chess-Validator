@@ -1,0 +1,7 @@
+C:\Users\nvthblake\Desktop\Net Core\Project\ChessValidator\obj\Debug\ChessValidator.csprojAssemblyReference.cache
+C:\Users\nvthblake\Desktop\Net Core\Project\ChessValidator\obj\Debug\ChessValidator.csproj.CoreCompileInputs.cache
+C:\Users\nvthblake\Desktop\Net Core\Project\ChessValidator\bin\Debug\ChessValidator.exe.config
+C:\Users\nvthblake\Desktop\Net Core\Project\ChessValidator\bin\Debug\ChessValidator.exe
+C:\Users\nvthblake\Desktop\Net Core\Project\ChessValidator\bin\Debug\ChessValidator.pdb
+C:\Users\nvthblake\Desktop\Net Core\Project\ChessValidator\obj\Debug\ChessValidator.exe
+C:\Users\nvthblake\Desktop\Net Core\Project\ChessValidator\obj\Debug\ChessValidator.pdb
