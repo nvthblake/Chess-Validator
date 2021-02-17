@@ -58,10 +58,10 @@ namespace ChessValidator.PawnPiece {
                 if (!blackCoord.Contains(forwardBlk) && !whiteCoord.Contains(forwardBlk)) {
                     results.Add(forwardBlk);
                 }
-                if (blackCoord.Contains(forwardRightBlk)) {
+                if (whiteCoord.Contains(forwardRightBlk)) {
                     results.Add(forwardRightBlk);
                 }
-                if (blackCoord.Contains(forwardLeftBlk)) {
+                if (whiteCoord.Contains(forwardLeftBlk)) {
                     results.Add(forwardLeftBlk);
                 }
             }

@@ -5,3 +5,10 @@ C:\Users\nvthblake\Desktop\Net Core\Project\ChessValidator\bin\Debug\ChessValida
 C:\Users\nvthblake\Desktop\Net Core\Project\ChessValidator\bin\Debug\ChessValidator.pdb
 C:\Users\nvthblake\Desktop\Net Core\Project\ChessValidator\obj\Debug\ChessValidator.exe
 C:\Users\nvthblake\Desktop\Net Core\Project\ChessValidator\obj\Debug\ChessValidator.pdb
+D:\Users\nvthblake\Github\Chess-Validator\bin\Debug\ChessValidator.exe.config
+D:\Users\nvthblake\Github\Chess-Validator\bin\Debug\ChessValidator.exe
+D:\Users\nvthblake\Github\Chess-Validator\bin\Debug\ChessValidator.pdb
+D:\Users\nvthblake\Github\Chess-Validator\obj\Debug\ChessValidator.csprojAssemblyReference.cache
+D:\Users\nvthblake\Github\Chess-Validator\obj\Debug\ChessValidator.csproj.CoreCompileInputs.cache
+D:\Users\nvthblake\Github\Chess-Validator\obj\Debug\ChessValidator.exe
+D:\Users\nvthblake\Github\Chess-Validator\obj\Debug\ChessValidator.pdb
