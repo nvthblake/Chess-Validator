@@ -41,6 +41,7 @@
     <Compile Include="Location\WhiteUnits.cs" />
     <Compile Include="PawnPiece\Pawn.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="QueenPiece\Queen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="input.txt" />
