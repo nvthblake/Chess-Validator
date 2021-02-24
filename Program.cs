@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChessValidator.KingPiece;
+using ChessValidator.KnightPiece;
 using ChessValidator.Location;
 using ChessValidator.PawnPiece;
 using ChessValidator.QueenPiece;
+using ChessValidator.RookPiece;
 
 namespace ChessValidator {
     class Program {
         private static readonly string[,] chessBoard = new string[8, 8];
-        private static readonly BlackUnits blackUnits = new BlackUnits();
-        private static readonly WhiteUnits whiteUnits = new WhiteUnits();
+        private static readonly ChessPieces chessPieces = new ChessPieces();
 
         private static void Main(string[] arg) {
             do {
@@ -34,20 +36,52 @@ namespace ChessValidator {
         }
 
         private static void GetValidMoves(char[] input) {
-            var pawn = new Pawn();
-            var queen = new Queen();
+            Pawn pawnUnit;
+            King kingUnit;
+            Queen queenUnit;
+            Rook rookUnit;
+            Bishop bishopUnit;
+            Knight knightUnit;
             List<int> moves = new List<int>();
 
-            if (input[0] == 'p' || input[0] == 'P') {
-                moves = pawn.ValidMoves(input);
+            switch (input[0]) {
+                case 'p':
+                case 'P':
+                    pawnUnit = input[0] == 'p' ? new Pawn(UnitColor.BLACK) : new Pawn(UnitColor.WHITE);
+                    moves = pawnUnit.ValidMoves(input);
+                    break;
+                case 'q':
+                case 'Q':
+                    queenUnit = input[0] == 'q' ? new Queen(UnitColor.BLACK) : new Queen(UnitColor.WHITE);
+                    moves = queenUnit.ValidMoves(input);
+                    break;
+                case 'r':
+                case 'R':
+                    rookUnit = input[0] == 'r' ? new Rook(UnitColor.BLACK) : new Rook(UnitColor.WHITE);
+                    moves = rookUnit.ValidMoves(input);
+                    break;
+                case 'b':
+                case 'B':
+                    bishopUnit = input[0] == 'b' ? new Bishop(UnitColor.BLACK) : new Bishop(UnitColor.WHITE);
+                    moves = bishopUnit.ValidMoves(input);
+                    break;
+                case 'k':
+                case 'K':
+                    kingUnit = input[0] == 'k' ? new King(UnitColor.BLACK) : new King(UnitColor.WHITE);
+                    moves = kingUnit.ValidMoves(input);
+                    break;
+                case 'n':
+                case 'N':
+                    knightUnit = input[0] == 'n' ? new Knight(UnitColor.BLACK) : new Knight(UnitColor.WHITE);
+                    moves = knightUnit.ValidMoves(input);
+                    break;
             }
-            else if (input[0] == 'q' || input[0] == 'Q') {
-                moves = queen.ValidMoves(input);
-            }
+
+            // Draw up all possible moves on chessboard array
             foreach (var item in moves) {
                 int row = (item / 10) - 1;
                 int col = (item % 10) - 1;
-                chessBoard[row, col] = "x";
+                chessBoard[row, col] = ".";
             }
             DrawChessBoard();
         }
@@ -56,8 +90,8 @@ namespace ChessValidator {
             Console.WriteLine("WHITE: " + lines[0]);
             Console.WriteLine("BLACK: " + lines[1]);
 
-            var whitePiece = whiteUnits.GetPieces();
-            var blackPiece = blackUnits.GetPieces();
+            var whitePiece = chessPieces.whitePieces;
+            var blackPiece = chessPieces.blackPieces;
 
             // Create a 8x8 blank chessBoard array:
             for (int row = 0; row < 8; row++) {
@@ -102,8 +136,8 @@ namespace ChessValidator {
         }
 
         private static string CheckAndGetPiece(string inputString) {
-            var blackDictionary = blackUnits.GetPiecesDictionary();
-            var whiteDictionary = whiteUnits.GetPiecesDictionary();
+            var blackDictionary = chessPieces.blackChessPieces.Item1;
+            var whiteDictionary = chessPieces.whiteChessPieces.Item1;
 
             string inputPiece = inputString.Substring(0, 1);
             int inputCoordinate = Int32.Parse(inputString.Substring(1));

@@ -36,12 +36,24 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BishopPiece\Bishop.cs" />
     <Compile Include="ChessBoard.cs" />
-    <Compile Include="Location\BlackUnits.cs" />
-    <Compile Include="Location\WhiteUnits.cs" />
+    <Compile Include="KingPiece\King.cs" />
+    <Compile Include="KnightPiece\Knight.cs" />
+    <Compile Include="Location\ChessPieces.cs" />
+    <Compile Include="Movements\Coordinate.cs" />
+    <Compile Include="Movements\IMovement.cs" />
+    <Compile Include="Movements\KingMove.cs" />
+    <Compile Include="Movements\KnightMove.cs" />
+    <Compile Include="Movements\Move.cs" />
+    <Compile Include="Movements\MoveDiagonal.cs" />
+    <Compile Include="Movements\MoveOrthogonal.cs" />
+    <Compile Include="Movements\AdjacentCoordinates.cs" />
     <Compile Include="PawnPiece\Pawn.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="QueenPiece\Queen.cs" />
+    <Compile Include="RookPiece\Rook.cs" />
+    <Compile Include="UnitColor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="input.txt" />

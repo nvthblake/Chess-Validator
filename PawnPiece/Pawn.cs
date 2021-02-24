@@ -4,19 +4,32 @@ using ChessValidator.Location;
 
 namespace ChessValidator.PawnPiece {
     class Pawn {
-        private static readonly BlackUnits blackUnits = new BlackUnits();
-        private static readonly WhiteUnits whiteUnits = new WhiteUnits();
+        private int row;
+        private int col;
 
-        private readonly HashSet<int> blackCoord = blackUnits.GetLocations();
-        private readonly HashSet<int> whiteCoord = whiteUnits.GetLocations();
+        public Pawn(UnitColor unitColor) {
+            if (unitColor == UnitColor.WHITE) {
+                startLine = 2;
+            }
+            else {
+                startLine = 7;
+            }
+        }
+
+        private readonly int startLine;
+
+        private static readonly ChessPieces chessPieces = new ChessPieces();
+
+        private readonly HashSet<int> blackCoord = chessPieces.blackChessPieces.Item2;
+        private readonly HashSet<int> whiteCoord = chessPieces.whiteChessPieces.Item2;
 
         private readonly List<int> results = new List<int>();
         public List<int> ValidMoves(char[] piecePosition) {
 
-            int row = Int32.Parse(piecePosition[1].ToString());
-            int col = Int32.Parse(piecePosition[2].ToString());
+            row = Int32.Parse(piecePosition[1].ToString());
+            col = Int32.Parse(piecePosition[2].ToString());
 
-            // Possible moves for pawns are: (R+1)*10 + C, (R+2)*10 + C, (R+1)*10 + (C+1), (R+1)*10 + (C-1)
+            // Possible moves for pawns
             int forwardWht = (row + 1) * 10 + col;
             int forwardTwo = (row + 2) * 10 + col;
             int forwardRight = (row + 1) * 10 + (col + 1);
@@ -29,7 +42,7 @@ namespace ChessValidator.PawnPiece {
 
             if (Char.IsUpper(piecePosition[0])) {
                 if (row == 8 || row == 1) return null;
-                if (row == 2) {
+                if (row == startLine) {
                     if (!blackCoord.Contains(forwardWht) && !whiteCoord.Contains(forwardWht)) {
                         if (!blackCoord.Contains(forwardTwo) && !whiteCoord.Contains(forwardTwo))
                             results.Add(forwardTwo);
@@ -47,7 +60,7 @@ namespace ChessValidator.PawnPiece {
             }
             else {
                 if (row == 8 || row == 1) return null;
-                if (row == 7) {
+                if (row == startLine) {
                     if (!blackCoord.Contains(forwardBlk) && !whiteCoord.Contains(forwardBlk)) {
                         if (!blackCoord.Contains(forwardTwoBlk) && !whiteCoord.Contains(forwardTwoBlk))
                             results.Add(forwardTwoBlk);
