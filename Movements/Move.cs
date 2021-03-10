@@ -8,18 +8,18 @@ namespace ChessValidator.Movements {
     class Move {
         public List<int> allMove;
     }
-    class OneMove : Move {
-        public List<int> OneForwardMove { get; set; }
-        public List<int> OneBackwardMove { get; set; }
-        public List<int> OneLeftMove { get; set; }
-        public List<int> OneRightMove { get; set; }
-        public List<int> OneForwardLeftMove { get; set; }
-        public List<int> OneForwardRightMove { get; set; }
-        public List<int> OneBackwardLeftMove { get; set; }
-        public List<int> OneBackwardRightMove { get; set; }
+    class AllKingMoves : Move {
+        public int OneForwardMove { get; set; }
+        public int OneBackwardMove { get; set; }
+        public int OneLeftMove { get; set; }
+        public int OneRightMove { get; set; }
+        public int OneForwardLeftMove { get; set; }
+        public int OneForwardRightMove { get; set; }
+        public int OneBackwardLeftMove { get; set; }
+        public int OneBackwardRightMove { get; set; }
     }
 
-    class AllPossibleMoves : Move {
+    class AllOrthoDiagMoves : Move {
         public List<int> AllForwardMoves { get; set; }
         public List<int> AllBackwardMoves { get; set; }
         public List<int> AllLeftMoves { get; set; }
@@ -31,13 +31,13 @@ namespace ChessValidator.Movements {
     }
 
     class AllKnightMoves : Move {
-        public List<int> OneForwardTwoLeft { get; set; }
-        public List<int> OneForwardTwoRight { get; set; }
-        public List<int> OneBackwardTwoLeft { get; set; }
-        public List<int> OneBackwardTwoRight { get; set; }
-        public List<int> OneLeftTwoForward { get; set; }
-        public List<int> OneLeftTwoBackward { get; set; }
-        public List<int> OneRightTwoForward { get; set; }
-        public List<int> OneRightTwoBackward { get; set; }
+        public int OneForwardTwoLeft { get; set; }
+        public int OneForwardTwoRight { get; set; }
+        public int OneBackwardTwoLeft { get; set; }
+        public int OneBackwardTwoRight { get; set; }
+        public int OneLeftTwoForward { get; set; }
+        public int OneLeftTwoBackward { get; set; }
+        public int OneRightTwoForward { get; set; }
+        public int OneRightTwoBackward { get; set; }
     }
 }

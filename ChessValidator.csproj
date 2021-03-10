@@ -40,7 +40,8 @@
     <Compile Include="ChessBoard.cs" />
     <Compile Include="KingPiece\King.cs" />
     <Compile Include="KnightPiece\Knight.cs" />
-    <Compile Include="Location\ChessPieces.cs" />
+    <Compile Include="PiecesLibrary\AllPossibleMoves.cs" />
+    <Compile Include="PiecesLibrary\ChessPieces.cs" />
     <Compile Include="Movements\Coordinate.cs" />
     <Compile Include="Movements\IMovement.cs" />
     <Compile Include="Movements\KingMove.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Movements\AdjacentCoordinates.cs" />
     <Compile Include="PawnPiece\Pawn.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Movements\ProtectKingMoves.cs" />
     <Compile Include="QueenPiece\Queen.cs" />
     <Compile Include="RookPiece\Rook.cs" />
     <Compile Include="UnitColor.cs" />

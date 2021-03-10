@@ -8,115 +8,172 @@ namespace ChessValidator.Movements {
     class KnightMove : AdjacentCoordinates, IKnightMove {
         private readonly int MIN = 1;
         private readonly int MAX = 8;
-        public Move GetAllMoves(int rowPosition, int colPosition, HashSet<int> allyCoord) {
+        public Move GetAllMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
             var allPossibleMoves = new AllKnightMoves() {
-                OneForwardTwoLeft = GetOneForwardTwoLeft(rowPosition, colPosition, allyCoord),
-                OneForwardTwoRight = GetOneForwardTwoRight(rowPosition, colPosition, allyCoord),
-                OneBackwardTwoLeft = GetOneBackwardTwoLeft(rowPosition, colPosition, allyCoord),
-                OneBackwardTwoRight = GetOneBackwardTwoRight(rowPosition, colPosition, allyCoord),
-                OneLeftTwoForward = GetOneLeftTwoForward(rowPosition, colPosition, allyCoord),
-                OneLeftTwoBackward = GetOneLeftTwoBackward(rowPosition, colPosition, allyCoord),
-                OneRightTwoForward = GetOneRightTwoForward(rowPosition, colPosition, allyCoord),
-                OneRightTwoBackward = GetOneRightTwoBackward(rowPosition, colPosition, allyCoord)
+                OneForwardTwoLeft = GetOneForwardTwoLeft(rowPosition, colPosition, allyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, potentialMoves),
+                OneForwardTwoRight = GetOneForwardTwoRight(rowPosition, colPosition, allyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, potentialMoves),
+                OneBackwardTwoLeft = GetOneBackwardTwoLeft(rowPosition, colPosition, allyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, potentialMoves),
+                OneBackwardTwoRight = GetOneBackwardTwoRight(rowPosition, colPosition, allyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, potentialMoves),
+                OneLeftTwoForward = GetOneLeftTwoForward(rowPosition, colPosition, allyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, potentialMoves),
+                OneLeftTwoBackward = GetOneLeftTwoBackward(rowPosition, colPosition, allyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, potentialMoves),
+                OneRightTwoForward = GetOneRightTwoForward(rowPosition, colPosition, allyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, potentialMoves),
+                OneRightTwoBackward = GetOneRightTwoBackward(rowPosition, colPosition, allyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, potentialMoves)
             };
-            var mergedList = new List<int>();
-            allPossibleMoves.OneForwardTwoLeft.ForEach(item => mergedList.Add(item));
-            allPossibleMoves.OneForwardTwoRight.ForEach(item => mergedList.Add(item));
-            allPossibleMoves.OneBackwardTwoLeft.ForEach(item => mergedList.Add(item));
-            allPossibleMoves.OneBackwardTwoRight.ForEach(item => mergedList.Add(item));
-            allPossibleMoves.OneLeftTwoForward.ForEach(item => mergedList.Add(item));
-            allPossibleMoves.OneLeftTwoBackward.ForEach(item => mergedList.Add(item));
-            allPossibleMoves.OneRightTwoForward.ForEach(item => mergedList.Add(item));
-            allPossibleMoves.OneRightTwoBackward.ForEach(item => mergedList.Add(item));
+            var mergedList = new List<int> {
+                allPossibleMoves.OneForwardTwoLeft,
+                allPossibleMoves.OneForwardTwoRight,
+                allPossibleMoves.OneBackwardTwoLeft,
+                allPossibleMoves.OneBackwardTwoRight,
+                allPossibleMoves.OneLeftTwoForward,
+                allPossibleMoves.OneLeftTwoBackward,
+                allPossibleMoves.OneRightTwoForward,
+                allPossibleMoves.OneRightTwoBackward
+            };
             allPossibleMoves.allMove = mergedList;
             return allPossibleMoves;
         }
-        public List<int> GetOneForwardTwoLeft(int rowPosition, int colPosition, HashSet<int> allyCoord) {
-            List<int> result = new List<int>();
+        public int GetOneForwardTwoLeft(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
             int coordinate = GetOneForwardTwoLeftCoordinate(rowPosition, colPosition);
+            int possibleMove = 0;
+            int originalPosition = rowPosition * 10 + colPosition;
             if (rowPosition < MAX && colPosition < MAX - 1) {
                 if (!allyCoord.Contains(coordinate)) {
-                    result.Add(coordinate);
+                    if (coordinate == enemyKing) {
+                        protectEnemyKingMoves.Add(originalPosition);
+                    }
+                    possibleMove = coordinate;
+                }
+                else {
+                    potentialMoves.Add(coordinate);
                 }
             }
-            return result;
+            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
         }
 
-        public List<int> GetOneForwardTwoRight(int rowPosition, int colPosition, HashSet<int> allyCoord) {
-            List<int> result = new List<int>();
+        public int GetOneForwardTwoRight(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
             int coordinate = GetOneForwardTwoRightCoordinate(rowPosition, colPosition);
+            int possibleMove = 0;
+            int originalPosition = rowPosition * 10 + colPosition;
             if (rowPosition < MAX && colPosition > MIN + 1) {
                 if (!allyCoord.Contains(coordinate)) {
-                    result.Add(coordinate);
+                    if (coordinate == enemyKing) {
+                        protectEnemyKingMoves.Add(originalPosition);
+                    }
+                    possibleMove = coordinate;
+                }
+                else {
+                    potentialMoves.Add(coordinate);
                 }
             }
-            return result;
+            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
         }
 
-        public List<int> GetOneBackwardTwoLeft(int rowPosition, int colPosition, HashSet<int> allyCoord) {
-            List<int> result = new List<int>();
+        public int GetOneBackwardTwoLeft(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
             int coordinate = GetOneBackwardTwoLeftCoordinate(rowPosition, colPosition);
+            int possibleMove = 0;
+            int originalPosition = rowPosition * 10 + colPosition;
             if (rowPosition > MIN && colPosition < MAX - 1) {
                 if (!allyCoord.Contains(coordinate)) {
-                    result.Add(coordinate);
+                    if (coordinate == enemyKing) {
+                        protectEnemyKingMoves.Add(originalPosition);
+                    }
+                    possibleMove = coordinate;
+                }
+                else {
+                    potentialMoves.Add(coordinate);
                 }
             }
-            return result;
+            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
         }
 
-        public List<int> GetOneBackwardTwoRight(int rowPosition, int colPosition, HashSet<int> allyCoord) {
-            List<int> result = new List<int>();
+        public int GetOneBackwardTwoRight(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
             int coordinate = GetOneBackwardTwoRightCoordinate(rowPosition, colPosition);
+            int possibleMove = 0;
+            int originalPosition = rowPosition * 10 + colPosition;
             if (rowPosition > MIN && colPosition > MIN + 1) {
                 if (!allyCoord.Contains(coordinate)) {
-                    result.Add(coordinate);
+                    if (coordinate == enemyKing) {
+                        protectEnemyKingMoves.Add(originalPosition);
+                    }
+                    possibleMove = coordinate;
+                }
+                else {
+                    potentialMoves.Add(coordinate);
                 }
             }
-            return result;
+            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
         }
 
-        public List<int> GetOneLeftTwoForward(int rowPosition, int colPosition, HashSet<int> allyCoord) {
-            List<int> result = new List<int>();
+        public int GetOneLeftTwoForward(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
             int coordinate = GetOneLeftTwoForwardCoordinate(rowPosition, colPosition);
+            int possibleMove = 0;
+            int originalPosition = rowPosition * 10 + colPosition;
             if (rowPosition < MAX - 1 && colPosition < MAX) {
                 if (!allyCoord.Contains(coordinate)) {
-                    result.Add(coordinate);
+                    if (coordinate == enemyKing) {
+                        protectEnemyKingMoves.Add(originalPosition);
+                    }
+                    possibleMove = coordinate;
+                }
+                else {
+                    potentialMoves.Add(coordinate);
                 }
             }
-            return result;
+            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
         }
 
-        public List<int> GetOneLeftTwoBackward(int rowPosition, int colPosition, HashSet<int> allyCoord) {
-            List<int> result = new List<int>();
+        public int GetOneLeftTwoBackward(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
             int coordinate = GetOneLeftTwoBackwardCoordinate(rowPosition, colPosition);
+            int possibleMove = 0;
+            int originalPosition = rowPosition * 10 + colPosition;
             if (rowPosition > MIN + 1 && colPosition < MAX) {
                 if (!allyCoord.Contains(coordinate)) {
-                    result.Add(coordinate);
+                    if (coordinate == enemyKing) {
+                        protectEnemyKingMoves.Add(originalPosition);
+                    }
+                    possibleMove = coordinate;
+                }
+                else {
+                    potentialMoves.Add(coordinate);
                 }
             }
-            return result;
+            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
         }
 
-        public List<int> GetOneRightTwoForward(int rowPosition, int colPosition, HashSet<int> allyCoord) {
-            List<int> result = new List<int>();
+        public int GetOneRightTwoForward(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
             int coordinate = GetOneRightTwoForwardCoordinate(rowPosition, colPosition);
+            int possibleMove = 0;
+            int originalPosition = rowPosition * 10 + colPosition;
             if (rowPosition < MAX - 1 && colPosition > MIN) {
                 if (!allyCoord.Contains(coordinate)) {
-                    result.Add(coordinate);
+                    if (coordinate == enemyKing) {
+                        protectEnemyKingMoves.Add(originalPosition);
+                    }
+                    possibleMove = coordinate;
+                }
+                else {
+                    potentialMoves.Add(coordinate);
                 }
             }
-            return result;
+            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
         }
 
-        public List<int> GetOneRightTwoBackward(int rowPosition, int colPosition, HashSet<int> allyCoord) {
-            List<int> result = new List<int>();
+        public int GetOneRightTwoBackward(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
             int coordinate = GetOneRightTwoBackwardCoordinate(rowPosition, colPosition);
+            int possibleMove = 0;
+            int originalPosition = rowPosition * 10 + colPosition;
             if (rowPosition > MIN + 1 && colPosition > MIN) {
                 if (!allyCoord.Contains(coordinate)) {
-                    result.Add(coordinate);
+                    if (coordinate == enemyKing) {
+                        protectEnemyKingMoves.Add(originalPosition);
+                    }
+                    possibleMove = coordinate;
+                }
+                else {
+                    potentialMoves.Add(coordinate);
                 }
             }
-            return result;
+            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
         }
     }
 }

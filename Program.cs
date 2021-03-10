@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ChessValidator.KingPiece;
 using ChessValidator.KnightPiece;
-using ChessValidator.Location;
+using ChessValidator.PiecesLibrary;
 using ChessValidator.PawnPiece;
 using ChessValidator.QueenPiece;
 using ChessValidator.RookPiece;
+using ChessValidator.Movements;
 
 namespace ChessValidator {
     class Program {
-        private static readonly string[,] chessBoard = new string[8, 8];
+        private static string[,] chessBoard;
         private static readonly ChessPieces chessPieces = new ChessPieces();
+        private static AllPossibleMoves allPossibleMoves = new AllPossibleMoves();
+        private static AllValidMoves allValidMoves = new AllValidMoves();
 
         private static void Main(string[] arg) {
+            chessBoard = new string[8, 8];
             do {
+                var allBlackPossibleMoves = allValidMoves.GetBlackValidMoves();
+                var allWhitePossibleMoves = allValidMoves.GetWhiteValidMoves();
                 PopulateChessboard(); // Populate chessboard array with pieces' inputs from input.txt
                 DrawChessBoard(); // Drawup a chessboard using chessboard array
                 Console.Write("enter piece location: ");
@@ -24,64 +27,27 @@ namespace ChessValidator {
                 string checkedPiece = CheckAndGetPiece(inputString);
 
                 if (!string.IsNullOrEmpty(checkedPiece)) {
-                    char[] inputChar = checkedPiece.ToCharArray();
-                    GetValidMoves(inputChar);
+                    //char[] inputChar = checkedPiece.ToCharArray();
+                    GetValidMoves(checkedPiece, allWhitePossibleMoves, allBlackPossibleMoves);
                 }
 
                 else Console.WriteLine("There is no such piece");
-                Console.WriteLine("Press Anything to Continue");
+                Console.WriteLine("Press Enter to Continue");
                 Console.ReadLine();
 
             } while (true);
         }
 
-        private static void GetValidMoves(char[] input) {
-            Pawn pawnUnit;
-            King kingUnit;
-            Queen queenUnit;
-            Rook rookUnit;
-            Bishop bishopUnit;
-            Knight knightUnit;
-            List<int> moves = new List<int>();
-
-            switch (input[0]) {
-                case 'p':
-                case 'P':
-                    pawnUnit = input[0] == 'p' ? new Pawn(UnitColor.BLACK) : new Pawn(UnitColor.WHITE);
-                    moves = pawnUnit.ValidMoves(input);
-                    break;
-                case 'q':
-                case 'Q':
-                    queenUnit = input[0] == 'q' ? new Queen(UnitColor.BLACK) : new Queen(UnitColor.WHITE);
-                    moves = queenUnit.ValidMoves(input);
-                    break;
-                case 'r':
-                case 'R':
-                    rookUnit = input[0] == 'r' ? new Rook(UnitColor.BLACK) : new Rook(UnitColor.WHITE);
-                    moves = rookUnit.ValidMoves(input);
-                    break;
-                case 'b':
-                case 'B':
-                    bishopUnit = input[0] == 'b' ? new Bishop(UnitColor.BLACK) : new Bishop(UnitColor.WHITE);
-                    moves = bishopUnit.ValidMoves(input);
-                    break;
-                case 'k':
-                case 'K':
-                    kingUnit = input[0] == 'k' ? new King(UnitColor.BLACK) : new King(UnitColor.WHITE);
-                    moves = kingUnit.ValidMoves(input);
-                    break;
-                case 'n':
-                case 'N':
-                    knightUnit = input[0] == 'n' ? new Knight(UnitColor.BLACK) : new Knight(UnitColor.WHITE);
-                    moves = knightUnit.ValidMoves(input);
-                    break;
-            }
+        private static void GetValidMoves(string input, Dictionary<string, List<int>> allWhiteMoves, Dictionary<string, List<int>> allBlackMoves) {
+            List<int> moves = allWhiteMoves.ContainsKey(input) ? allWhiteMoves[input] : allBlackMoves[input];
 
             // Draw up all possible moves on chessboard array
             foreach (var item in moves) {
-                int row = (item / 10) - 1;
-                int col = (item % 10) - 1;
-                chessBoard[row, col] = ".";
+                if (item > 0) {
+                    int row = (item / 10) - 1;
+                    int col = (item % 10) - 1;
+                    chessBoard[row, col] = ".";
+                }
             }
             DrawChessBoard();
         }
@@ -146,7 +112,7 @@ namespace ChessValidator {
                 return inputPiece.ToLower() + inputCoordinate.ToString();
             }
             else if (whiteDictionary.ContainsKey(inputCoordinate) && whiteDictionary[inputCoordinate].ToLower() == inputPiece.ToLower()) {
-                return inputPiece.ToUpper() + inputCoordinate.ToString();
+                return inputPiece.ToLower() + inputCoordinate.ToString();
             }
 
             return string.Empty;
