@@ -12,14 +12,13 @@ namespace ChessValidator {
     class Program {
         private static string[,] chessBoard;
         private static readonly ChessPieces chessPieces = new ChessPieces();
-        private static AllPossibleMoves allPossibleMoves = new AllPossibleMoves();
-        private static AllValidMoves allValidMoves = new AllValidMoves();
+        private static readonly AllValidMoves allValidMoves = new AllValidMoves();
 
         private static void Main(string[] arg) {
             chessBoard = new string[8, 8];
             do {
-                var allBlackPossibleMoves = allValidMoves.GetBlackValidMoves();
                 var allWhitePossibleMoves = allValidMoves.GetWhiteValidMoves();
+                var allBlackPossibleMoves = allValidMoves.GetBlackValidMoves();
                 PopulateChessboard(); // Populate chessboard array with pieces' inputs from input.txt
                 DrawChessBoard(); // Drawup a chessboard using chessboard array
                 Console.Write("enter piece location: ");

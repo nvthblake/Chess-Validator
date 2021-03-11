@@ -8,7 +8,7 @@ namespace ChessValidator.Movements {
     class KnightMove : AdjacentCoordinates, IKnightMove {
         private readonly int MIN = 1;
         private readonly int MAX = 8;
-        public Move GetAllMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
+        public Move GetAllMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized) {
             var allPossibleMoves = new AllKnightMoves() {
                 OneForwardTwoLeft = GetOneForwardTwoLeft(rowPosition, colPosition, allyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, potentialMoves),
                 OneForwardTwoRight = GetOneForwardTwoRight(rowPosition, colPosition, allyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, potentialMoves),
@@ -32,10 +32,11 @@ namespace ChessValidator.Movements {
             allPossibleMoves.allMove = mergedList;
             return allPossibleMoves;
         }
-        public int GetOneForwardTwoLeft(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
+        public int GetOneForwardTwoLeft(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized = false) {
             int coordinate = GetOneForwardTwoLeftCoordinate(rowPosition, colPosition);
             int possibleMove = 0;
             int originalPosition = rowPosition * 10 + colPosition;
+
             if (rowPosition < MAX && colPosition < MAX - 1) {
                 if (!allyCoord.Contains(coordinate)) {
                     if (coordinate == enemyKing) {
@@ -47,13 +48,19 @@ namespace ChessValidator.Movements {
                     potentialMoves.Add(coordinate);
                 }
             }
-            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
+            if (!isInitialized && protectAllyKingMoves.Any()) {
+                if (!protectAllyKingMoves.Contains(possibleMove)) {
+                    return 0;
+                }
+            }
+            return possibleMove;
         }
 
-        public int GetOneForwardTwoRight(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
+        public int GetOneForwardTwoRight(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized = false) {
             int coordinate = GetOneForwardTwoRightCoordinate(rowPosition, colPosition);
             int possibleMove = 0;
             int originalPosition = rowPosition * 10 + colPosition;
+
             if (rowPosition < MAX && colPosition > MIN + 1) {
                 if (!allyCoord.Contains(coordinate)) {
                     if (coordinate == enemyKing) {
@@ -65,13 +72,19 @@ namespace ChessValidator.Movements {
                     potentialMoves.Add(coordinate);
                 }
             }
-            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
+            if (!isInitialized && protectAllyKingMoves.Any()) {
+                if (!protectAllyKingMoves.Contains(possibleMove)) {
+                    return 0;
+                }
+            }
+            return possibleMove;
         }
 
-        public int GetOneBackwardTwoLeft(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
+        public int GetOneBackwardTwoLeft(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized = false) {
             int coordinate = GetOneBackwardTwoLeftCoordinate(rowPosition, colPosition);
             int possibleMove = 0;
             int originalPosition = rowPosition * 10 + colPosition;
+
             if (rowPosition > MIN && colPosition < MAX - 1) {
                 if (!allyCoord.Contains(coordinate)) {
                     if (coordinate == enemyKing) {
@@ -83,13 +96,19 @@ namespace ChessValidator.Movements {
                     potentialMoves.Add(coordinate);
                 }
             }
-            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
+            if (!isInitialized && protectAllyKingMoves.Any()) {
+                if (!protectAllyKingMoves.Contains(possibleMove)) {
+                    return 0;
+                }
+            }
+            return possibleMove;
         }
 
-        public int GetOneBackwardTwoRight(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
+        public int GetOneBackwardTwoRight(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized = false) {
             int coordinate = GetOneBackwardTwoRightCoordinate(rowPosition, colPosition);
             int possibleMove = 0;
             int originalPosition = rowPosition * 10 + colPosition;
+
             if (rowPosition > MIN && colPosition > MIN + 1) {
                 if (!allyCoord.Contains(coordinate)) {
                     if (coordinate == enemyKing) {
@@ -101,13 +120,19 @@ namespace ChessValidator.Movements {
                     potentialMoves.Add(coordinate);
                 }
             }
-            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
+            if (!isInitialized && protectAllyKingMoves.Any()) {
+                if (!protectAllyKingMoves.Contains(possibleMove)) {
+                    return 0;
+                }
+            }
+            return possibleMove;
         }
 
-        public int GetOneLeftTwoForward(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
+        public int GetOneLeftTwoForward(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized = false) {
             int coordinate = GetOneLeftTwoForwardCoordinate(rowPosition, colPosition);
             int possibleMove = 0;
             int originalPosition = rowPosition * 10 + colPosition;
+
             if (rowPosition < MAX - 1 && colPosition < MAX) {
                 if (!allyCoord.Contains(coordinate)) {
                     if (coordinate == enemyKing) {
@@ -119,13 +144,19 @@ namespace ChessValidator.Movements {
                     potentialMoves.Add(coordinate);
                 }
             }
-            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
+            if (!isInitialized && protectAllyKingMoves.Any()) {
+                if (!protectAllyKingMoves.Contains(possibleMove)) {
+                    return 0;
+                }
+            }
+            return possibleMove;
         }
 
-        public int GetOneLeftTwoBackward(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
+        public int GetOneLeftTwoBackward(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized = false) {
             int coordinate = GetOneLeftTwoBackwardCoordinate(rowPosition, colPosition);
             int possibleMove = 0;
             int originalPosition = rowPosition * 10 + colPosition;
+
             if (rowPosition > MIN + 1 && colPosition < MAX) {
                 if (!allyCoord.Contains(coordinate)) {
                     if (coordinate == enemyKing) {
@@ -137,13 +168,19 @@ namespace ChessValidator.Movements {
                     potentialMoves.Add(coordinate);
                 }
             }
-            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
+            if (!isInitialized && protectAllyKingMoves.Any()) {
+                if (!protectAllyKingMoves.Contains(possibleMove)) {
+                    return 0;
+                }
+            }
+            return possibleMove;
         }
 
-        public int GetOneRightTwoForward(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
+        public int GetOneRightTwoForward(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized = false) {
             int coordinate = GetOneRightTwoForwardCoordinate(rowPosition, colPosition);
             int possibleMove = 0;
             int originalPosition = rowPosition * 10 + colPosition;
+
             if (rowPosition < MAX - 1 && colPosition > MIN) {
                 if (!allyCoord.Contains(coordinate)) {
                     if (coordinate == enemyKing) {
@@ -155,13 +192,19 @@ namespace ChessValidator.Movements {
                     potentialMoves.Add(coordinate);
                 }
             }
-            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
+            if (!isInitialized && protectAllyKingMoves.Any()) {
+                if (!protectAllyKingMoves.Contains(possibleMove)) {
+                    return 0;
+                }
+            }
+            return possibleMove;
         }
 
-        public int GetOneRightTwoBackward(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
+        public int GetOneRightTwoBackward(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized = false) {
             int coordinate = GetOneRightTwoBackwardCoordinate(rowPosition, colPosition);
             int possibleMove = 0;
             int originalPosition = rowPosition * 10 + colPosition;
+
             if (rowPosition > MIN + 1 && colPosition > MIN) {
                 if (!allyCoord.Contains(coordinate)) {
                     if (coordinate == enemyKing) {
@@ -173,7 +216,12 @@ namespace ChessValidator.Movements {
                     potentialMoves.Add(coordinate);
                 }
             }
-            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
+            if (!isInitialized && protectAllyKingMoves.Any()) {
+                if (!protectAllyKingMoves.Contains(possibleMove)) {
+                    return 0;
+                }
+            }
+            return possibleMove;
         }
     }
 }

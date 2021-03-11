@@ -32,13 +32,13 @@ namespace ChessValidator.QueenPiece {
 
         private readonly List<int> results = new List<int>();
 
-        public List<int> ValidMoves(char[] piecePosition) {
+        public List<int> ValidMoves(char[] piecePosition, bool isInitialized) {
             
             int rowPosition = Int32.Parse(piecePosition[1].ToString());
             int colPosition = Int32.Parse(piecePosition[2].ToString());
 
-            var orthogonalMoves = ImoveOrthogonal.GetAllMoves(rowPosition, colPosition, allyCoord, enemyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, coverKingMoves, potentialMoves);
-            var diagonalMoves = ImoveDiagonal.GetAllMoves(rowPosition, colPosition, allyCoord, enemyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, coverKingMoves, potentialMoves);
+            var orthogonalMoves = ImoveOrthogonal.GetAllMoves(rowPosition, colPosition, allyCoord, enemyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, coverKingMoves, potentialMoves, isInitialized);
+            var diagonalMoves = ImoveDiagonal.GetAllMoves(rowPosition, colPosition, allyCoord, enemyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, coverKingMoves, potentialMoves, isInitialized);
             diagonalMoves.allMove.ForEach(item => results.Add(item));
             orthogonalMoves.allMove.ForEach(item => results.Add(item));
 

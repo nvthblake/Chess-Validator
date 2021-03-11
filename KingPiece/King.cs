@@ -10,7 +10,6 @@ namespace ChessValidator.KingPiece {
         private static readonly ChessPieces chessPieces = new ChessPieces();
         private readonly HashSet<int> protectAllyKingMoves;
         //private HashSet<int> enemyPossibleCoordinateDictionary;
-        private readonly AllPossibleMoves allPossibleMoves = new AllPossibleMoves();
         private readonly HashSet<int> potentialMoves;
 
         public King(UnitColor unitColor, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {

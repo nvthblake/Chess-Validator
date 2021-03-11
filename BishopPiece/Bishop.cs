@@ -26,10 +26,10 @@ namespace ChessValidator.RookPiece {
             this.potentialMoves = potentialMoves;
         }
 
-        public List<int> ValidMoves(char[] piecePosition) {
+        public List<int> ValidMoves(char[] piecePosition, bool isInitialized) {
             int rowPosition = Int32.Parse(piecePosition[1].ToString());
             int colPosition = Int32.Parse(piecePosition[2].ToString());
-            var diagonalMoves = ImoveDiagonal.GetAllMoves(rowPosition, colPosition, allyCoord, enemyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, coverKingMoves, potentialMoves);
+            var diagonalMoves = ImoveDiagonal.GetAllMoves(rowPosition, colPosition, allyCoord, enemyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, coverKingMoves, potentialMoves, isInitialized);
 
             return diagonalMoves.allMove;
         }

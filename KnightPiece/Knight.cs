@@ -22,10 +22,10 @@ namespace ChessValidator.KnightPiece {
             this.potentialMoves = potentialMoves;
         }
 
-        public List<int> ValidMoves(char[] piecePosition) {
+        public List<int> ValidMoves(char[] piecePosition, bool isInitialized) {
             int rowPosition = Int32.Parse(piecePosition[1].ToString());
             int colPosition = Int32.Parse(piecePosition[2].ToString());
-            var knightMoves = IknightMove.GetAllMoves(rowPosition, colPosition, allyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, potentialMoves);
+            var knightMoves = IknightMove.GetAllMoves(rowPosition, colPosition, allyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, potentialMoves, isInitialized);
 
             return knightMoves.allMove;
         }
