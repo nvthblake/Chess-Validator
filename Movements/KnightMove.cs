@@ -16,7 +16,7 @@ namespace ChessValidator.Movements {
                 OneRightTwoForward = GetOneRightTwoForward(rowPosition, colPosition, allyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, potentialMoves),
                 OneRightTwoBackward = GetOneRightTwoBackward(rowPosition, colPosition, allyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, potentialMoves)
             };
-            var mergedList = new List<int> {
+            allPossibleMoves.AllMove = new List<int> {
                 allPossibleMoves.OneForwardTwoLeft,
                 allPossibleMoves.OneForwardTwoRight,
                 allPossibleMoves.OneBackwardTwoLeft,
@@ -26,7 +26,6 @@ namespace ChessValidator.Movements {
                 allPossibleMoves.OneRightTwoForward,
                 allPossibleMoves.OneRightTwoBackward
             };
-            allPossibleMoves.AllMove = mergedList;
             return allPossibleMoves;
         }
         public int GetOneForwardTwoLeft(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized = false) {

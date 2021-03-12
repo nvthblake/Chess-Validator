@@ -37,7 +37,7 @@ namespace ChessValidator.PiecesLibrary {
                 switch (item.Value) {
                     case "p":
                         _pawnUnit = new Pawn(UnitColor.White, ProtectKingMoves.ProtectBlackKingMoves, ProtectKingMoves.ProtectWhiteKingMoves, ProtectKingMoves.PotentialWhiteMoves);
-                        moves = _pawnUnit.GetValidMoves(input);
+                        moves = _pawnUnit.GetValidMoves(input, isInitialized);
                         break;
                     case "q":
                         _queenUnit = new Queen(UnitColor.White, ProtectKingMoves.ProtectBlackKingMoves, ProtectKingMoves.ProtectWhiteKingMoves, ProtectKingMoves.CoverKingMoves, ProtectKingMoves.PotentialWhiteMoves);
@@ -73,7 +73,7 @@ namespace ChessValidator.PiecesLibrary {
                 switch (item.Value) {
                     case "p":
                         _pawnUnit = new Pawn(UnitColor.Black, ProtectKingMoves.ProtectWhiteKingMoves, ProtectKingMoves.ProtectBlackKingMoves, ProtectKingMoves.PotentialBlackMoves);
-                        moves = _pawnUnit.GetValidMoves(input);
+                        moves = _pawnUnit.GetValidMoves(input, isInitialized);
                         break;
                     case "q":
                         _queenUnit = new Queen(UnitColor.Black, ProtectKingMoves.ProtectWhiteKingMoves, ProtectKingMoves.ProtectBlackKingMoves, ProtectKingMoves.CoverKingMoves, ProtectKingMoves.PotentialBlackMoves);
@@ -161,10 +161,25 @@ namespace ChessValidator.PiecesLibrary {
         }
         private static HashSet<int> GetEnemyPossibleMovesSet(Dictionary<string, List<int>> allPossibleEnemyMovesDict) {
             HashSet<int> enemyPossibleMovesSet = new HashSet<int>();
+            var coordToRemove = new List<int>();
+            foreach (var piece in allPossibleEnemyMovesDict) {
+                if (piece.Key.StartsWith("p")) {
+                    var allPawnMoves = piece.Value;
+                    var currentCoordinate = int.Parse(piece.Key.Substring(1, 2));
+                    foreach(var coord in piece.Value) {
+                        if (coord == (currentCoordinate + 10) || coord == (currentCoordinate - 10) || coord == (currentCoordinate + 20) || coord == (currentCoordinate - 20)) {
+                            coordToRemove.Add(coord);
+                        }
+                    }
+                }
+            }
             foreach (var piece in allPossibleEnemyMovesDict) {
                 foreach (var coordinate in piece.Value) {
                     enemyPossibleMovesSet.Add(coordinate);
                 }
+            }
+            foreach (var coordinate in coordToRemove) {
+                enemyPossibleMovesSet.Remove(coordinate);
             }
 
             return enemyPossibleMovesSet;

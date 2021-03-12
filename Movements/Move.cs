@@ -4,6 +4,12 @@ namespace ChessValidator.Movements {
     class Move {
         public List<int> AllMove;
     }
+    class AllPawnMoves : Move {
+        public int OneForwardMove { get; set; }
+        public int TwoForwardMove { get; set; }
+        public int OneForwardLeftMove { get; set; }
+        public int OneForwardRightMove { get; set; }
+    }
     class AllKingMoves : Move {
         public int OneForwardMove { get; set; }
         public int OneBackwardMove { get; set; }

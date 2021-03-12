@@ -3,8 +3,8 @@ using System.Linq;
 
 namespace ChessValidator.Movements {
     class MoveDiagonal : AdjacentCoordinates, IMoveDiagonal {
-        private readonly int _min = 1;
-        private readonly int _max = 8;
+        private const int Min = 1;
+        private const int Max = 8;
 
         public Move GetAllMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing,
                                 HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves, HashSet<int> potentialMoves, bool isInitialized) {
@@ -33,7 +33,7 @@ namespace ChessValidator.Movements {
             var firstEnemyEncountered = -1;
             var allMovesToKing = new List<int> { originalPosition };
 
-            while (rowPosition < _max && colPosition < _max) {
+            while (rowPosition < Max && colPosition < Max) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     if (!enemyCoord.Contains(nextCoordinate)) {
                         if (numberEnemyPieceEncountered == 0) {
@@ -98,7 +98,7 @@ namespace ChessValidator.Movements {
             var allMovesToKing = new List<int> { originalPosition };
 
 
-            while (rowPosition < _max && colPosition > _min) {
+            while (rowPosition < Max && colPosition > Min) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     if (!enemyCoord.Contains(nextCoordinate)) {
                         if (numberEnemyPieceEncountered == 0) {
@@ -162,7 +162,7 @@ namespace ChessValidator.Movements {
             var allMovesToKing = new List<int> { originalPosition };
 
 
-            while (rowPosition > _min && colPosition < _max) {
+            while (rowPosition > Min && colPosition < Max) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     if (!enemyCoord.Contains(nextCoordinate)) {
                         if (numberEnemyPieceEncountered == 0) {
@@ -226,7 +226,7 @@ namespace ChessValidator.Movements {
             var allMovesToKing = new List<int> { originalPosition };
 
 
-            while (rowPosition > _min && colPosition > _min) {
+            while (rowPosition > Min && colPosition > Min) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     if (!enemyCoord.Contains(nextCoordinate)) {
                         if (numberEnemyPieceEncountered == 0) {
