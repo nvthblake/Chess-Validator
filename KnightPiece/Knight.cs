@@ -1,33 +1,32 @@
-﻿using ChessValidator.PiecesLibrary;
-using ChessValidator.Movements;
-using System;
+﻿using ChessValidator.Movements;
+using ChessValidator.PiecesLibrary;
 using System.Collections.Generic;
 
 namespace ChessValidator.KnightPiece {
     class Knight {
-        private readonly IKnightMove IknightMove;
-        private readonly HashSet<int> allyCoord;
-        private static readonly ChessPieces chessPieces = new ChessPieces();
-        private readonly int enemyKing;
-        private readonly HashSet<int> protectEnemyKingMoves;
-        private readonly HashSet<int> protectAllyKingMoves;
-        private readonly HashSet<int> potentialMoves;
+        private readonly IKnightMove _iknightMove;
+        private readonly HashSet<int> _allyCoord;
+        private static readonly ChessPieces ChessPieces = new ChessPieces();
+        private readonly int _enemyKing;
+        private readonly HashSet<int> _protectEnemyKingMoves;
+        private readonly HashSet<int> _protectAllyKingMoves;
+        private readonly HashSet<int> _potentialMoves;
 
         public Knight(UnitColor unitColor, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
-            IknightMove = new KnightMove();
-            allyCoord = UnitColor.WHITE == unitColor ? chessPieces.whiteChessPieces.Item2 : chessPieces.blackChessPieces.Item2;
-            enemyKing = UnitColor.WHITE == unitColor ? chessPieces.blackChessPieces.Item3 : chessPieces.whiteChessPieces.Item3;
-            this.protectEnemyKingMoves = protectEnemyKingMoves;
-            this.protectAllyKingMoves = protectAllyKingMoves;
-            this.potentialMoves = potentialMoves;
+            _iknightMove = new KnightMove();
+            _allyCoord = UnitColor.White == unitColor ? ChessPieces.WhiteChessPieces.Item2 : ChessPieces.BlackChessPieces.Item2;
+            _enemyKing = UnitColor.White == unitColor ? ChessPieces.BlackChessPieces.Item3 : ChessPieces.WhiteChessPieces.Item3;
+            this._protectEnemyKingMoves = protectEnemyKingMoves;
+            this._protectAllyKingMoves = protectAllyKingMoves;
+            this._potentialMoves = potentialMoves;
         }
 
-        public List<int> ValidMoves(char[] piecePosition, bool isInitialized) {
-            int rowPosition = Int32.Parse(piecePosition[1].ToString());
-            int colPosition = Int32.Parse(piecePosition[2].ToString());
-            var knightMoves = IknightMove.GetAllMoves(rowPosition, colPosition, allyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, potentialMoves, isInitialized);
+        public List<int> GetValidMoves(char[] piecePosition, bool isInitialized) {
+            var rowPosition = int.Parse(piecePosition[1].ToString());
+            var colPosition = int.Parse(piecePosition[2].ToString());
+            var knightMoves = _iknightMove.GetAllMoves(rowPosition, colPosition, _allyCoord, _enemyKing, _protectEnemyKingMoves, _protectAllyKingMoves, _potentialMoves, isInitialized);
 
-            return knightMoves.allMove;
+            return knightMoves.AllMove;
         }
     }
 }

@@ -1,39 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessValidator.PiecesLibrary {
-    class ChessPieces {
+    internal class ChessPieces {
 
-        public Tuple<Dictionary<int, string>, HashSet<int>, int> whiteChessPieces;
-        public Tuple<Dictionary<int, string>, HashSet<int>, int> blackChessPieces;
+        public Tuple<Dictionary<int, string>, HashSet<int>, int> WhiteChessPieces;
+        public Tuple<Dictionary<int, string>, HashSet<int>, int> BlackChessPieces;
 
 
-        static readonly string[] lines = System.IO.File.ReadAllLines(@"D:\Users\nvthblake\Github\Chess-Validator\input.txt");
-        public readonly string[] blackPieces = lines[1].Split(' ');
-        public readonly string[] whitePieces = lines[0].Split(' ');
+        private static readonly string[] Lines = System.IO.File.ReadAllLines(@"D:\Users\nvthblake\Github\Chess-Validator\input.txt");
+        public readonly string[] BlackPieces = Lines[1].Split(' ');
+        public readonly string[] WhitePieces = Lines[0].Split(' ');
 
         public ChessPieces() {
-            whiteChessPieces = GetPieceAndLocation(whitePieces);
-            blackChessPieces = GetPieceAndLocation(blackPieces);
+            WhiteChessPieces = GetPieceAndLocation(WhitePieces);
+            BlackChessPieces = GetPieceAndLocation(BlackPieces);
         }
 
         public Dictionary<int, string> GetPiecesDictionary(string[] pieces) {
-            Dictionary<int, string> locationDictionary = new Dictionary<int, string>();
+            var locationDictionary = new Dictionary<int, string>();
             foreach (var item in pieces) {
-                int coordinate = Int32.Parse(item.Substring(1));
-                string piece = item.Substring(0, 1).ToLower();
+                var coordinate = int.Parse(item.Substring(1));
+                var piece = item.Substring(0, 1).ToLower();
                 locationDictionary.Add(coordinate, piece);
             }
             return locationDictionary;
         }
 
         public HashSet<int> GetLocations(string[] pieces) {
-            HashSet<int> coordinates = new HashSet<int>();
+            var coordinates = new HashSet<int>();
             foreach (var item in pieces) {
-                int coordinate = Int32.Parse(item.Substring(1));
+                var coordinate = int.Parse(item.Substring(1));
                 coordinates.Add(coordinate);
             }
             return coordinates;
@@ -47,7 +45,7 @@ namespace ChessValidator.PiecesLibrary {
             var pieceDictionary = GetPiecesDictionary(pieces);
             var pieceLocation = GetLocations(pieces);
             var enemyKingLocation = GetKingCoordinate(pieceDictionary);
-            return Tuple.Create<Dictionary<int, string>, HashSet<int>, int>(pieceDictionary, pieceLocation, enemyKingLocation);
+            return Tuple.Create(pieceDictionary, pieceLocation, enemyKingLocation);
         }
     }
 }

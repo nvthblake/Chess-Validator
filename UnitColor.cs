@@ -1,3 +1,3 @@
 ﻿namespace ChessValidator {
-    public enum UnitColor { BLACK, WHITE }
+    public enum UnitColor { Black, White }
 }

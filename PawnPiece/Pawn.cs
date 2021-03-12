@@ -1,52 +1,50 @@
-﻿using System;
+﻿using ChessValidator.PiecesLibrary;
 using System.Collections.Generic;
-using ChessValidator.PiecesLibrary;
 
 namespace ChessValidator.PawnPiece {
     class Pawn {
-        private readonly HashSet<int> allyCoord;
-        private readonly HashSet<int> enemyCoord;
-        private readonly int enemyKing;
-        private readonly HashSet<int> protectEnemyKingMoves;
-        private readonly HashSet<int> protectAllyKingMoves;
-        private readonly HashSet<int> potentialMoves;
-        private readonly UnitColor unitColor;
-        private readonly ChessPieces chessPieces;
+        private readonly HashSet<int> _allyCoord;
+        private readonly HashSet<int> _enemyCoord;
+        private readonly int _enemyKing;
+        private readonly HashSet<int> _protectEnemyKingMoves;
+        private readonly HashSet<int> _protectAllyKingMoves;
+        private readonly HashSet<int> _potentialMoves;
+        private readonly UnitColor _unitColor;
 
-        private readonly int startLine;
+        private readonly int _startLine;
 
         public Pawn(UnitColor unitColor, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
-            chessPieces = new ChessPieces();
-            startLine = UnitColor.WHITE == unitColor ? 2 : 7;
-            allyCoord = UnitColor.WHITE == unitColor ? chessPieces.whiteChessPieces.Item2 : chessPieces.blackChessPieces.Item2;
-            enemyCoord = UnitColor.WHITE == unitColor ? chessPieces.blackChessPieces.Item2 : chessPieces.whiteChessPieces.Item2;
-            enemyKing = UnitColor.WHITE == unitColor ? chessPieces.blackChessPieces.Item3 : chessPieces.whiteChessPieces.Item3;
-            this.protectEnemyKingMoves = protectEnemyKingMoves;
-            this.protectAllyKingMoves = protectAllyKingMoves;
-            this.potentialMoves = potentialMoves;
-            this.unitColor = unitColor;
+            var chessPieces = new ChessPieces();
+            _startLine = UnitColor.White == unitColor ? 2 : 7;
+            _allyCoord = UnitColor.White == unitColor ? chessPieces.WhiteChessPieces.Item2 : chessPieces.BlackChessPieces.Item2;
+            _enemyCoord = UnitColor.White == unitColor ? chessPieces.BlackChessPieces.Item2 : chessPieces.WhiteChessPieces.Item2;
+            _enemyKing = UnitColor.White == unitColor ? chessPieces.BlackChessPieces.Item3 : chessPieces.WhiteChessPieces.Item3;
+            this._protectEnemyKingMoves = protectEnemyKingMoves;
+            this._protectAllyKingMoves = protectAllyKingMoves;
+            this._potentialMoves = potentialMoves;
+            this._unitColor = unitColor;
         }
 
 
-        public List<int> ValidMoves(char[] piecePosition) {
+        public List<int> GetValidMoves(char[] piecePosition) {
 
-            int row = Int32.Parse(piecePosition[1].ToString());
-            int col = Int32.Parse(piecePosition[2].ToString());
-            
+            var row = int.Parse(piecePosition[1].ToString());
+            var col = int.Parse(piecePosition[2].ToString());
+
 
             if (row == 8 || row == 1) return new List<int>();
             return GetAllPawnMoves(row, col);
         }
 
         private List<int> GetAllPawnMoves(int rowPosition, int colPosition) {
-            int originalPosition = rowPosition * 10 + colPosition;
-            List<int> allPossibleMoves = new List<int>();
-            List<int> results = new List<int>();
+            var originalPosition = rowPosition * 10 + colPosition;
+            var allPossibleMoves = new List<int>();
+            var results = new List<int>();
             int forward;
             int forwardTwo;
             int forwardRight;
             int forwardLeft;
-            if (unitColor == UnitColor.WHITE) {
+            if (_unitColor == UnitColor.White) {
                 // Possible moves for white pawns
                 forward = (rowPosition + 1) * 10 + colPosition;
                 forwardTwo = (rowPosition + 2) * 10 + colPosition;
@@ -60,33 +58,33 @@ namespace ChessValidator.PawnPiece {
                 forwardRight = (rowPosition - 1) * 10 + (colPosition + 1);
                 forwardLeft = (rowPosition - 1) * 10 + (colPosition - 1);
             }
-            if (!allyCoord.Contains(forward) && !enemyCoord.Contains(forward)) {
+            if (!_allyCoord.Contains(forward) && !_enemyCoord.Contains(forward)) {
                 allPossibleMoves.Add(forward);
-                if (rowPosition == startLine) {
-                    if (!allyCoord.Contains(forwardTwo) && !enemyCoord.Contains(forwardTwo))
+                if (rowPosition == _startLine) {
+                    if (!_allyCoord.Contains(forwardTwo) && !_enemyCoord.Contains(forwardTwo))
                         allPossibleMoves.Add(forwardTwo);
                 }
             }
-            if (allyCoord.Contains(forwardRight)) {
-                potentialMoves.Add(forwardRight);
+            if (_allyCoord.Contains(forwardRight)) {
+                _potentialMoves.Add(forwardRight);
             }
-            if (allyCoord.Contains(forwardLeft)) {
-                potentialMoves.Add(forwardLeft);
+            if (_allyCoord.Contains(forwardLeft)) {
+                _potentialMoves.Add(forwardLeft);
             }
-            if (enemyCoord.Contains(forwardRight)) {
-                if (forwardRight == enemyKing) {
-                    protectEnemyKingMoves.Add(originalPosition);
+            if (_enemyCoord.Contains(forwardRight)) {
+                if (forwardRight == _enemyKing) {
+                    _protectEnemyKingMoves.Add(originalPosition);
                 }
                 allPossibleMoves.Add(forwardRight);
             }
-            if (enemyCoord.Contains(forwardLeft)) {
-                if (forwardLeft == enemyKing) {
-                    protectEnemyKingMoves.Add(originalPosition);
+            if (_enemyCoord.Contains(forwardLeft)) {
+                if (forwardLeft == _enemyKing) {
+                    _protectEnemyKingMoves.Add(originalPosition);
                 }
                 allPossibleMoves.Add(forwardLeft);
             }
-            if (protectAllyKingMoves.Count != 0) {
-                foreach (var item in protectAllyKingMoves) {
+            if (_protectAllyKingMoves.Count != 0) {
+                foreach (var item in _protectAllyKingMoves) {
                     if (allPossibleMoves.Contains(item)) {
                         results.Add(item);
                     }

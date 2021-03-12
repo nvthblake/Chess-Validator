@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ChessValidator.Movements {
     class Coordinate {
-        public List<int> allCoordinates;
+        public List<int> AllCoordinates;
     }
 
     class AdjacentCoordinate : Coordinate {

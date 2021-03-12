@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ChessValidator.Movements {
     class AdjacentCoordinates : IAdjacentCoordinate {
-        
+
         public Coordinate GetAllCoordinates(int rowPosition, int colPosition) {
             var adjacentCoordinates = new AdjacentCoordinate() {
                 ForwardCoordinate = GetForwardCoordinate(rowPosition, colPosition),
@@ -29,7 +25,7 @@ namespace ChessValidator.Movements {
                 adjacentCoordinates.BackwardLeftCoordinate,
                 adjacentCoordinates.BackwardRightCoordinate
             };
-            adjacentCoordinates.allCoordinates = mergedList;
+            adjacentCoordinates.AllCoordinates = mergedList;
             return adjacentCoordinates;
         }
         public int GetForwardCoordinate(int rowPosition, int colPosition = 0) {

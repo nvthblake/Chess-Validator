@@ -1,37 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ChessValidator.Movements;
 using ChessValidator.PiecesLibrary;
-using ChessValidator.Movements;
+using System.Collections.Generic;
 
 namespace ChessValidator.RookPiece {
     class Rook {
-        private readonly IMoveOrthogonal ImoveOrthogonal;
-        private readonly HashSet<int> allyCoord;
-        private readonly HashSet<int> enemyCoord;
-        private static readonly ChessPieces chessPieces = new ChessPieces();
-        private readonly int enemyKing;
-        private readonly HashSet<int> protectEnemyKingMoves;
-        private readonly HashSet<int> protectAllyKingMoves;
-        private readonly Dictionary<int, List<int>> coverKingMoves;
-        private readonly HashSet<int> potentialMoves;
+        private readonly IMoveOrthogonal _imoveOrthogonal;
+        private readonly HashSet<int> _allyCoord;
+        private readonly HashSet<int> _enemyCoord;
+        private static readonly ChessPieces ChessPieces = new ChessPieces();
+        private readonly int _enemyKing;
+        private readonly HashSet<int> _protectEnemyKingMoves;
+        private readonly HashSet<int> _protectAllyKingMoves;
+        private readonly Dictionary<int, List<int>> _coverKingMoves;
+        private readonly HashSet<int> _potentialMoves;
 
         public Rook(UnitColor unitColor, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves, HashSet<int> potentialMoves) {
-            ImoveOrthogonal = new MoveOrthogonal();
-            allyCoord = UnitColor.WHITE == unitColor ? chessPieces.whiteChessPieces.Item2 : chessPieces.blackChessPieces.Item2;
-            enemyCoord = UnitColor.WHITE == unitColor ? chessPieces.blackChessPieces.Item2 : chessPieces.whiteChessPieces.Item2;
-            enemyKing = UnitColor.WHITE == unitColor ? chessPieces.blackChessPieces.Item3 : chessPieces.whiteChessPieces.Item3;
-            this.protectEnemyKingMoves = protectEnemyKingMoves;
-            this.protectAllyKingMoves = protectAllyKingMoves;
-            this.coverKingMoves = coverKingMoves;
-            this.potentialMoves = potentialMoves;
+            _imoveOrthogonal = new MoveOrthogonal();
+            _allyCoord = UnitColor.White == unitColor ? ChessPieces.WhiteChessPieces.Item2 : ChessPieces.BlackChessPieces.Item2;
+            _enemyCoord = UnitColor.White == unitColor ? ChessPieces.BlackChessPieces.Item2 : ChessPieces.WhiteChessPieces.Item2;
+            _enemyKing = UnitColor.White == unitColor ? ChessPieces.BlackChessPieces.Item3 : ChessPieces.WhiteChessPieces.Item3;
+            this._protectEnemyKingMoves = protectEnemyKingMoves;
+            this._protectAllyKingMoves = protectAllyKingMoves;
+            this._coverKingMoves = coverKingMoves;
+            this._potentialMoves = potentialMoves;
         }
 
-        public List<int> ValidMoves(char[] piecePosition, bool isInitialized) {
-            int rowPosition = Int32.Parse(piecePosition[1].ToString());
-            int colPosition = Int32.Parse(piecePosition[2].ToString());
-            var orthogonalMoves = ImoveOrthogonal.GetAllMoves(rowPosition, colPosition, allyCoord, enemyCoord, enemyKing, protectEnemyKingMoves, protectAllyKingMoves, coverKingMoves, potentialMoves, isInitialized);
+        public List<int> GetValidMoves(char[] piecePosition, bool isInitialized) {
+            var rowPosition = int.Parse(piecePosition[1].ToString());
+            var colPosition = int.Parse(piecePosition[2].ToString());
+            var orthogonalMoves = _imoveOrthogonal.GetAllMoves(rowPosition, colPosition, _allyCoord, _enemyCoord, _enemyKing, _protectEnemyKingMoves, _protectAllyKingMoves, _coverKingMoves, _potentialMoves, isInitialized);
 
-            return orthogonalMoves.allMove;
+            return orthogonalMoves.AllMove;
         }
     }
 }

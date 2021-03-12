@@ -3,8 +3,8 @@ using System.Linq;
 
 namespace ChessValidator.Movements {
     class MoveDiagonal : AdjacentCoordinates, IMoveDiagonal {
-        private readonly int MIN = 1;
-        private readonly int MAX = 8;
+        private readonly int _min = 1;
+        private readonly int _max = 8;
 
         public Move GetAllMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing,
                                 HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves, HashSet<int> potentialMoves, bool isInitialized) {
@@ -19,21 +19,21 @@ namespace ChessValidator.Movements {
             allPossibleMoves.AllForwardRightMoves.ForEach(item => mergedList.Add(item));
             allPossibleMoves.AllBackwardLeftMoves.ForEach(item => mergedList.Add(item));
             allPossibleMoves.AllBackwardRightMoves.ForEach(item => mergedList.Add(item));
-            allPossibleMoves.allMove = mergedList;
+            allPossibleMoves.AllMove = mergedList;
             return allPossibleMoves;
         }
         public List<int> GetAllForwardLeftMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing,
                                                 HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves,
                                                 HashSet<int> potentialMoves, bool isInitialized = false) {
-            List<int> allPossibleMoves = new List<int>();
-            List<int> results = new List<int>();
-            int nextCoordinate = GetForwardLeftCoordinate(rowPosition, colPosition);
-            int originalPosition = rowPosition * 10 + colPosition;
-            int numberEnemyPieceEncountered = 0;
-            int firstEnemyEncountered = -1;
-            List<int> allMovesToKing = new List<int> { originalPosition };
+            var allPossibleMoves = new List<int>();
+            var results = new List<int>();
+            var nextCoordinate = GetForwardLeftCoordinate(rowPosition, colPosition);
+            var originalPosition = rowPosition * 10 + colPosition;
+            var numberEnemyPieceEncountered = 0;
+            var firstEnemyEncountered = -1;
+            var allMovesToKing = new List<int> { originalPosition };
 
-            while (rowPosition < MAX && colPosition < MAX) {
+            while (rowPosition < _max && colPosition < _max) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     if (!enemyCoord.Contains(nextCoordinate)) {
                         if (numberEnemyPieceEncountered == 0) {
@@ -89,17 +89,16 @@ namespace ChessValidator.Movements {
         }
 
         public List<int> GetAllForwardRightMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves, HashSet<int> potentialMoves, bool isInitialized = false) {
-            List<int> allPossibleMoves = new List<int>();
-            List<int> results = new List<int>();
-            int nextCoordinate = GetForwardRightCoordinate(rowPosition, colPosition);
-            int originalPosition = rowPosition * 10 + colPosition;
-            int numberEnemyPieceEncountered = 0;
-            int firstEnemyEncountered = -1;
-            List<int> allMovesToKing = new List<int>();
-            allMovesToKing.Add(originalPosition);
+            var allPossibleMoves = new List<int>();
+            var results = new List<int>();
+            var nextCoordinate = GetForwardRightCoordinate(rowPosition, colPosition);
+            var originalPosition = rowPosition * 10 + colPosition;
+            var numberEnemyPieceEncountered = 0;
+            var firstEnemyEncountered = -1;
+            var allMovesToKing = new List<int> { originalPosition };
 
 
-            while (rowPosition < MAX && colPosition > MIN) {
+            while (rowPosition < _max && colPosition > _min) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     if (!enemyCoord.Contains(nextCoordinate)) {
                         if (numberEnemyPieceEncountered == 0) {
@@ -154,17 +153,16 @@ namespace ChessValidator.Movements {
         }
 
         public List<int> GetAllBackwardLeftMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves, HashSet<int> potentialMoves, bool isInitialized = false) {
-            List<int> allPossibleMoves = new List<int>();
-            List<int> results = new List<int>();
-            int nextCoordinate = GetBackwardLeftCoordinate(rowPosition, colPosition);
-            int originalPosition = rowPosition * 10 + colPosition;
-            int numberEnemyPieceEncountered = 0;
-            int firstEnemyEncountered = -1;
-            List<int> allMovesToKing = new List<int>();
-            allMovesToKing.Add(originalPosition);
+            var allPossibleMoves = new List<int>();
+            var results = new List<int>();
+            var nextCoordinate = GetBackwardLeftCoordinate(rowPosition, colPosition);
+            var originalPosition = rowPosition * 10 + colPosition;
+            var numberEnemyPieceEncountered = 0;
+            var firstEnemyEncountered = -1;
+            var allMovesToKing = new List<int> { originalPosition };
 
 
-            while (rowPosition > MIN && colPosition < MAX) {
+            while (rowPosition > _min && colPosition < _max) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     if (!enemyCoord.Contains(nextCoordinate)) {
                         if (numberEnemyPieceEncountered == 0) {
@@ -219,17 +217,16 @@ namespace ChessValidator.Movements {
         }
 
         public List<int> GetAllBackwardRightMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves, HashSet<int> potentialMoves, bool isInitialized = false) {
-            List<int> allPossibleMoves = new List<int>();
-            List<int> results = new List<int>();
-            int nextCoordinate = GetBackwardRightCoordinate(rowPosition, colPosition);
-            int originalPosition = rowPosition * 10 + colPosition;
-            int numberEnemyPieceEncountered = 0;
-            int firstEnemyEncountered = -1;
-            List<int> allMovesToKing = new List<int>();
-            allMovesToKing.Add(originalPosition);
+            var allPossibleMoves = new List<int>();
+            var results = new List<int>();
+            var nextCoordinate = GetBackwardRightCoordinate(rowPosition, colPosition);
+            var originalPosition = rowPosition * 10 + colPosition;
+            var numberEnemyPieceEncountered = 0;
+            var firstEnemyEncountered = -1;
+            var allMovesToKing = new List<int> { originalPosition };
 
 
-            while (rowPosition > MIN && colPosition > MIN) {
+            while (rowPosition > _min && colPosition > _min) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     if (!enemyCoord.Contains(nextCoordinate)) {
                         if (numberEnemyPieceEncountered == 0) {

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ChessValidator.Movements {
     class Move {
-        public List<int> allMove;
+        public List<int> AllMove;
     }
     class AllKingMoves : Move {
         public int OneForwardMove { get; set; }

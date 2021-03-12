@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessValidator.Movements {
     class MoveOrthogonal : AdjacentCoordinates, IMoveOrthogonal {
-        private readonly int MIN = 1;
-        private readonly int MAX = 8;
-        private List<int> allPossibleForwardMoves;
-        private List<int> allPossibleBackwardMoves;
-        private List<int> allPossibleLeftMoves;
-        private List<int> allPossibleRightMoves;
+        private readonly int _min = 1;
+        private readonly int _max = 8;
+        private readonly List<int> _allPossibleForwardMoves;
+        private readonly List<int> _allPossibleBackwardMoves;
+        private readonly List<int> _allPossibleLeftMoves;
+        private readonly List<int> _allPossibleRightMoves;
 
         public MoveOrthogonal() {
-            allPossibleForwardMoves = new List<int>();
-            allPossibleBackwardMoves = new List<int>();
-            allPossibleLeftMoves = new List<int>();
-            allPossibleRightMoves = new List<int>();
+            _allPossibleForwardMoves = new List<int>();
+            _allPossibleBackwardMoves = new List<int>();
+            _allPossibleLeftMoves = new List<int>();
+            _allPossibleRightMoves = new List<int>();
         }
 
         // When GetAllForwardMoves is executed, allPossibleMoves is gone. 
@@ -36,7 +33,7 @@ namespace ChessValidator.Movements {
             allPossibleMoves.AllBackwardMoves.ForEach(item => mergedList.Add(item));
             allPossibleMoves.AllLeftMoves.ForEach(item => mergedList.Add(item));
             allPossibleMoves.AllRightMoves.ForEach(item => mergedList.Add(item));
-            allPossibleMoves.allMove = mergedList;
+            allPossibleMoves.AllMove = mergedList;
             return allPossibleMoves;
         }
         public List<int> GetAllForwardMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing,
@@ -50,11 +47,11 @@ namespace ChessValidator.Movements {
             List<int> allMovesToKing = new List<int> { originalPosition };
 
 
-            while (rowPosition < MAX) {
+            while (rowPosition < _max) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     if (!enemyCoord.Contains(nextCoordinate)) {
                         if (numberEnemyPieceEncountered == 0) {
-                            allPossibleForwardMoves.Add(nextCoordinate);
+                            _allPossibleForwardMoves.Add(nextCoordinate);
                         }
                         allMovesToKing.Add(nextCoordinate);
                     }
@@ -63,7 +60,7 @@ namespace ChessValidator.Movements {
                             numberEnemyPieceEncountered++;
                             if (numberEnemyPieceEncountered == 1) {
                                 firstEnemyEncountered = nextCoordinate;
-                                allPossibleForwardMoves.Add(nextCoordinate);
+                                _allPossibleForwardMoves.Add(nextCoordinate);
                                 allMovesToKing.Add(nextCoordinate);
                             }
                             else {
@@ -73,8 +70,8 @@ namespace ChessValidator.Movements {
                         else {
                             if (numberEnemyPieceEncountered == 0) {
                                 protectEnemyKingMoves.Add(originalPosition);
-                                allPossibleForwardMoves.ForEach(item => protectEnemyKingMoves.Add(item));
-                                allPossibleForwardMoves.Add(nextCoordinate);
+                                _allPossibleForwardMoves.ForEach(item => protectEnemyKingMoves.Add(item));
+                                _allPossibleForwardMoves.Add(nextCoordinate);
                             }
                             else if (numberEnemyPieceEncountered == 1) {
                                 if (!coverKingMoves.ContainsKey(firstEnemyEncountered)) {
@@ -95,13 +92,13 @@ namespace ChessValidator.Movements {
             }
             if (!isInitialized && protectAllyKingMoves.Any()) {
                 foreach (var item in protectAllyKingMoves) {
-                    if (allPossibleForwardMoves.Contains(item)) {
+                    if (_allPossibleForwardMoves.Contains(item)) {
                         results.Add(item);
                     }
                 }
                 return results;
             }
-            return allPossibleForwardMoves;
+            return _allPossibleForwardMoves;
         }
         public List<int> GetAllBackwardMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing,
                                              HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves,
@@ -114,11 +111,11 @@ namespace ChessValidator.Movements {
             List<int> allMovesToKing = new List<int>() { originalPosition };
 
 
-            while (rowPosition > MIN) {
+            while (rowPosition > _min) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     if (!enemyCoord.Contains(nextCoordinate)) {
                         if (numberEnemyPieceEncountered == 0) {
-                            allPossibleBackwardMoves.Add(nextCoordinate);
+                            _allPossibleBackwardMoves.Add(nextCoordinate);
                         }
                         allMovesToKing.Add(nextCoordinate);
                     }
@@ -128,7 +125,7 @@ namespace ChessValidator.Movements {
                             numberEnemyPieceEncountered++;
                             if (numberEnemyPieceEncountered == 1) {
                                 firstEnemyEncountered = nextCoordinate;
-                                allPossibleBackwardMoves.Add(nextCoordinate);
+                                _allPossibleBackwardMoves.Add(nextCoordinate);
                                 allMovesToKing.Add(nextCoordinate);
                             }
                             else {
@@ -138,8 +135,8 @@ namespace ChessValidator.Movements {
                         else {
                             if (numberEnemyPieceEncountered == 0) {
                                 protectEnemyKingMoves.Add(originalPosition);
-                                allPossibleBackwardMoves.ForEach(item => protectEnemyKingMoves.Add(item));
-                                allPossibleBackwardMoves.Add(nextCoordinate);
+                                _allPossibleBackwardMoves.ForEach(item => protectEnemyKingMoves.Add(item));
+                                _allPossibleBackwardMoves.Add(nextCoordinate);
                             }
                             else if (numberEnemyPieceEncountered == 1) {
                                 if (!coverKingMoves.ContainsKey(firstEnemyEncountered)) {
@@ -160,13 +157,13 @@ namespace ChessValidator.Movements {
             }
             if (!isInitialized && protectAllyKingMoves.Any()) {
                 foreach (var item in protectAllyKingMoves) {
-                    if (allPossibleBackwardMoves.Contains(item)) {
+                    if (_allPossibleBackwardMoves.Contains(item)) {
                         results.Add(item);
                     }
                 }
                 return results;
             }
-            return allPossibleBackwardMoves;
+            return _allPossibleBackwardMoves;
         }
         public List<int> GetAllLeftMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing,
                                          HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves,
@@ -179,11 +176,11 @@ namespace ChessValidator.Movements {
             List<int> allMovesToKing = new List<int> { originalPosition };
 
 
-            while (colPosition < MAX) {
+            while (colPosition < _max) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     if (!enemyCoord.Contains(nextCoordinate)) {
                         if (numberEnemyPieceEncountered == 0) {
-                            allPossibleLeftMoves.Add(nextCoordinate);
+                            _allPossibleLeftMoves.Add(nextCoordinate);
                         }
                         allMovesToKing.Add(nextCoordinate);
                     }
@@ -193,7 +190,7 @@ namespace ChessValidator.Movements {
                             numberEnemyPieceEncountered++;
                             if (numberEnemyPieceEncountered == 1) {
                                 firstEnemyEncountered = nextCoordinate;
-                                allPossibleLeftMoves.Add(nextCoordinate);
+                                _allPossibleLeftMoves.Add(nextCoordinate);
                                 allMovesToKing.Add(nextCoordinate);
                             }
                             else {
@@ -203,8 +200,8 @@ namespace ChessValidator.Movements {
                         else {
                             if (numberEnemyPieceEncountered == 0) {
                                 protectEnemyKingMoves.Add(originalPosition);
-                                allPossibleLeftMoves.ForEach(item => protectEnemyKingMoves.Add(item));
-                                allPossibleLeftMoves.Add(nextCoordinate);
+                                _allPossibleLeftMoves.ForEach(item => protectEnemyKingMoves.Add(item));
+                                _allPossibleLeftMoves.Add(nextCoordinate);
                             }
                             else if (numberEnemyPieceEncountered == 1) {
                                 if (!coverKingMoves.ContainsKey(firstEnemyEncountered)) {
@@ -225,13 +222,13 @@ namespace ChessValidator.Movements {
             }
             if (!isInitialized && protectAllyKingMoves.Any()) {
                 foreach (var item in protectAllyKingMoves) {
-                    if (allPossibleLeftMoves.Contains(item)) {
+                    if (_allPossibleLeftMoves.Contains(item)) {
                         results.Add(item);
                     }
                 }
                 return results;
             }
-            return allPossibleLeftMoves;
+            return _allPossibleLeftMoves;
         }
         public List<int> GetAllRightMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing,
                                           HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves,
@@ -244,11 +241,11 @@ namespace ChessValidator.Movements {
             List<int> allMovesToKing = new List<int> { originalPosition };
 
 
-            while (colPosition > MIN) {
+            while (colPosition > _min) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     if (!enemyCoord.Contains(nextCoordinate)) {
                         if (numberEnemyPieceEncountered == 0) {
-                            allPossibleRightMoves.Add(nextCoordinate);
+                            _allPossibleRightMoves.Add(nextCoordinate);
                             allMovesToKing.Add(nextCoordinate);
                         }
                         allMovesToKing.Add(nextCoordinate);
@@ -259,7 +256,7 @@ namespace ChessValidator.Movements {
                             numberEnemyPieceEncountered++;
                             if (numberEnemyPieceEncountered == 1) {
                                 firstEnemyEncountered = nextCoordinate;
-                                allPossibleRightMoves.Add(nextCoordinate);
+                                _allPossibleRightMoves.Add(nextCoordinate);
                             }
                             else {
                                 break;
@@ -268,8 +265,8 @@ namespace ChessValidator.Movements {
                         else {
                             if (numberEnemyPieceEncountered == 0) {
                                 protectEnemyKingMoves.Add(originalPosition);
-                                allPossibleRightMoves.ForEach(item => protectEnemyKingMoves.Add(item));
-                                allPossibleRightMoves.Add(nextCoordinate);
+                                _allPossibleRightMoves.ForEach(item => protectEnemyKingMoves.Add(item));
+                                _allPossibleRightMoves.Add(nextCoordinate);
                             }
                             else if (numberEnemyPieceEncountered == 1) {
                                 if (!coverKingMoves.ContainsKey(firstEnemyEncountered)) {
@@ -290,13 +287,13 @@ namespace ChessValidator.Movements {
             }
             if (!isInitialized && protectAllyKingMoves.Any()) {
                 foreach (var item in protectAllyKingMoves) {
-                    if (allPossibleRightMoves.Contains(item)) {
+                    if (_allPossibleRightMoves.Contains(item)) {
                         results.Add(item);
                     }
                 }
                 return results;
             }
-            return allPossibleRightMoves;
+            return _allPossibleRightMoves;
         }
     }
 }

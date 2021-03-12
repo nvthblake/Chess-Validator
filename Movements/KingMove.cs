@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ChessValidator.Movements {
     class KingMove : AdjacentCoordinates, IKingMove {
-        private readonly int MIN = 1;
-        private readonly int MAX = 8;
-        private List<int> allMoves;
+        private const int Min = 1;
+        private const int Max = 8;
         public Move GetAllMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
             var allPossibleAdjacentMoves = new AllKingMoves() {
                 OneForwardMove = GetOneForwardMove(rowPosition, colPosition, allyCoord, protectAllyKingMoves, potentialMoves),
@@ -30,15 +25,14 @@ namespace ChessValidator.Movements {
                 allPossibleAdjacentMoves.OneBackwardLeftMove,
                 allPossibleAdjacentMoves.OneBackwardRightMove
             };
-            allPossibleAdjacentMoves.allMove = mergedList;
-            allMoves = mergedList;
+            allPossibleAdjacentMoves.AllMove = mergedList;
             return allPossibleAdjacentMoves;
         }
 
         public int GetOneForwardMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
-            int nextCoordinate = GetForwardCoordinate(rowPosition, colPosition);
-            int possibleMove = 0;
-            if (rowPosition < MAX) {
+            var nextCoordinate = GetForwardCoordinate(rowPosition, colPosition);
+            var possibleMove = 0;
+            if (rowPosition < Max) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     possibleMove = nextCoordinate;
                 }
@@ -55,9 +49,9 @@ namespace ChessValidator.Movements {
         }
 
         public int GetOneBackwardMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
-            int nextCoordinate = GetBackwardCoordinate(rowPosition, colPosition);
-            int possibleMove = 0;
-            if (rowPosition > MIN) {
+            var nextCoordinate = GetBackwardCoordinate(rowPosition, colPosition);
+            var possibleMove = 0;
+            if (rowPosition > Min) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     possibleMove = nextCoordinate;
                 }
@@ -65,18 +59,13 @@ namespace ChessValidator.Movements {
                     potentialMoves.Add(nextCoordinate);
                 }
             }
-            //foreach (var item in enemyMovesDictionary) {
-            //    if (item.Value.Contains(possibleMove)) {
-            //        return 0;
-            //    }
-            //}
             return protectAllyKingMoves.Count != 0 && protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
         }
 
         public int GetOneLeftMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
-            int nextCoordinate = GetLeftCoordinate(colPosition, rowPosition);
-            int possibleMove = 0;
-            if (colPosition < MAX) {
+            var nextCoordinate = GetLeftCoordinate(colPosition, rowPosition);
+            var possibleMove = 0;
+            if (colPosition < Max) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     possibleMove = nextCoordinate;
                 }
@@ -84,18 +73,13 @@ namespace ChessValidator.Movements {
                     potentialMoves.Add(nextCoordinate);
                 }
             }
-            //foreach (var item in enemyMovesDictionary) {
-            //    if (item.Value.Contains(possibleMove)) {
-            //        return 0;
-            //    }
-            //}
             return protectAllyKingMoves.Count != 0 && protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
         }
 
         public int GetOneRightMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
-            int nextCoordinate = GetRightCoordinate(colPosition, rowPosition);
-            int possibleMove = 0;
-            if (colPosition > MIN) {
+            var nextCoordinate = GetRightCoordinate(colPosition, rowPosition);
+            var possibleMove = 0;
+            if (colPosition > Min) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     possibleMove = nextCoordinate;
                 }
@@ -112,9 +96,9 @@ namespace ChessValidator.Movements {
         }
 
         public int GetOneForwardLeftMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
-            int nextCoordinate = GetForwardLeftCoordinate(rowPosition, colPosition);
-            int possibleMove = 0;
-            if (rowPosition < MAX && colPosition < MAX) {
+            var nextCoordinate = GetForwardLeftCoordinate(rowPosition, colPosition);
+            var possibleMove = 0;
+            if (rowPosition < Max && colPosition < Max) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     possibleMove = nextCoordinate;
                 }
@@ -131,9 +115,9 @@ namespace ChessValidator.Movements {
         }
 
         public int GetOneForwardRightMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
-            int nextCoordinate = GetForwardRightCoordinate(rowPosition, colPosition);
-            int possibleMove = 0;
-            if (rowPosition < MAX && colPosition > MIN) {
+            var nextCoordinate = GetForwardRightCoordinate(rowPosition, colPosition);
+            var possibleMove = 0;
+            if (rowPosition < Max && colPosition > Min) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     possibleMove = nextCoordinate;
                 }
@@ -150,9 +134,9 @@ namespace ChessValidator.Movements {
         }
 
         public int GetOneBackwardLeftMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
-            int nextCoordinate = GetBackwardLeftCoordinate(rowPosition, colPosition);
-            int possibleMove = 0;
-            if (rowPosition > MIN && colPosition < MAX) {
+            var nextCoordinate = GetBackwardLeftCoordinate(rowPosition, colPosition);
+            var possibleMove = 0;
+            if (rowPosition > Min && colPosition < Max) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     possibleMove = nextCoordinate;
                 }
@@ -169,9 +153,9 @@ namespace ChessValidator.Movements {
         }
 
         public int GetOneBackwardRightMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
-            int nextCoordinate = GetBackwardRightCoordinate(rowPosition, colPosition);
-            int possibleMove = 0;
-            if (rowPosition > MIN && colPosition > MIN) {
+            var nextCoordinate = GetBackwardRightCoordinate(rowPosition, colPosition);
+            var possibleMove = 0;
+            if (rowPosition > Min && colPosition > Min) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     possibleMove = nextCoordinate;
                 }

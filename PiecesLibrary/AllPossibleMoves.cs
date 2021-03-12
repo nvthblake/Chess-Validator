@@ -4,63 +4,60 @@ using ChessValidator.Movements;
 using ChessValidator.PawnPiece;
 using ChessValidator.QueenPiece;
 using ChessValidator.RookPiece;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessValidator.PiecesLibrary {
     class AllPossibleMoves {
-        private static readonly ChessPieces chessPieces = new ChessPieces();
-        private static readonly Dictionary<int, string> whiteDictionary = chessPieces.whiteChessPieces.Item1;
-        private static readonly Dictionary<int, string> blackDictionary = chessPieces.blackChessPieces.Item1;
-        public static readonly ProtectKingMoves protectKingMoves = new ProtectKingMoves();
-        public readonly Dictionary<string, List<int>> allWhitePossibleMovesDict;
-        public readonly Dictionary<string, List<int>> allBlackPossibleMovesDict;
+        private static readonly ChessPieces ChessPieces = new ChessPieces();
+        private static readonly Dictionary<int, string> WhiteDictionary = ChessPieces.WhiteChessPieces.Item1;
+        private static readonly Dictionary<int, string> BlackDictionary = ChessPieces.BlackChessPieces.Item1;
+        public static readonly ProtectKingMoves ProtectKingMoves = new ProtectKingMoves();
+        public readonly Dictionary<string, List<int>> AllWhitePossibleMovesDict;
+        public readonly Dictionary<string, List<int>> AllBlackPossibleMovesDict;
 
         public AllPossibleMoves(bool isInitialized) {
-            allWhitePossibleMovesDict = GetAllWhitePossibleMovesDict(isInitialized);
-            allBlackPossibleMovesDict = GetAllBlackPossibleMovesDict(isInitialized);
+            AllWhitePossibleMovesDict = GetAllWhitePossibleMovesDict(isInitialized);
+            AllBlackPossibleMovesDict = GetAllBlackPossibleMovesDict(isInitialized);
         }
 
-        Pawn pawnUnit;
-        King kingUnit;
-        Queen queenUnit;
-        Bishop bishopUnit;
-        Knight knightUnit;
-        Rook rookUnit;
+        Pawn _pawnUnit;
+        King _kingUnit;
+        Queen _queenUnit;
+        Bishop _bishopUnit;
+        Knight _knightUnit;
+        Rook _rookUnit;
 
         public Dictionary<string, List<int>> GetAllWhitePossibleMovesDict(bool isInitialized) {
             Dictionary<string, List<int>> results = new Dictionary<string, List<int>>();
-            foreach (var item in whiteDictionary) {
+            foreach (var item in WhiteDictionary) {
                 List<int> moves = new List<int>();
                 string pieceInfo = item.Value + item.Key.ToString();
                 char[] input = pieceInfo.ToCharArray();
                 switch (item.Value) {
                     case "p":
-                        pawnUnit = new Pawn(UnitColor.WHITE, protectKingMoves.ProtectBlackKingMoves, protectKingMoves.ProtectWhiteKingMoves, protectKingMoves.PotentialWhiteMoves);
-                        moves = pawnUnit.ValidMoves(input);
+                        _pawnUnit = new Pawn(UnitColor.White, ProtectKingMoves.ProtectBlackKingMoves, ProtectKingMoves.ProtectWhiteKingMoves, ProtectKingMoves.PotentialWhiteMoves);
+                        moves = _pawnUnit.GetValidMoves(input);
                         break;
                     case "q":
-                        queenUnit = new Queen(UnitColor.WHITE, protectKingMoves.ProtectBlackKingMoves, protectKingMoves.ProtectWhiteKingMoves, protectKingMoves.CoverKingMoves, protectKingMoves.PotentialWhiteMoves);
-                        moves = queenUnit.ValidMoves(input, isInitialized);
+                        _queenUnit = new Queen(UnitColor.White, ProtectKingMoves.ProtectBlackKingMoves, ProtectKingMoves.ProtectWhiteKingMoves, ProtectKingMoves.CoverKingMoves, ProtectKingMoves.PotentialWhiteMoves);
+                        moves = _queenUnit.GetValidMoves(input, isInitialized);
                         break;
                     case "r":
-                        rookUnit = new Rook(UnitColor.WHITE, protectKingMoves.ProtectBlackKingMoves, protectKingMoves.ProtectWhiteKingMoves, protectKingMoves.CoverKingMoves, protectKingMoves.PotentialWhiteMoves);
-                        moves = rookUnit.ValidMoves(input, isInitialized);
+                        _rookUnit = new Rook(UnitColor.White, ProtectKingMoves.ProtectBlackKingMoves, ProtectKingMoves.ProtectWhiteKingMoves, ProtectKingMoves.CoverKingMoves, ProtectKingMoves.PotentialWhiteMoves);
+                        moves = _rookUnit.GetValidMoves(input, isInitialized);
                         break;
                     case "b":
-                        bishopUnit = new Bishop(UnitColor.WHITE, protectKingMoves.ProtectBlackKingMoves, protectKingMoves.ProtectWhiteKingMoves, protectKingMoves.CoverKingMoves, protectKingMoves.PotentialWhiteMoves);
-                        moves = bishopUnit.ValidMoves(input, isInitialized);
+                        _bishopUnit = new Bishop(UnitColor.White, ProtectKingMoves.ProtectBlackKingMoves, ProtectKingMoves.ProtectWhiteKingMoves, ProtectKingMoves.CoverKingMoves, ProtectKingMoves.PotentialWhiteMoves);
+                        moves = _bishopUnit.GetValidMoves(input, isInitialized);
                         break;
                     case "k":
-                        kingUnit = new King(UnitColor.WHITE, protectKingMoves.ProtectWhiteKingMoves, protectKingMoves.PotentialWhiteMoves);
-                        moves = kingUnit.PossibleMoves(input);
+                        _kingUnit = new King(UnitColor.White, ProtectKingMoves.ProtectWhiteKingMoves, ProtectKingMoves.PotentialWhiteMoves);
+                        moves = _kingUnit.GetPossibleMoves(input);
                         break;
                     case "n":
-                        knightUnit = new Knight(UnitColor.WHITE, protectKingMoves.ProtectBlackKingMoves, protectKingMoves.ProtectWhiteKingMoves, protectKingMoves.PotentialWhiteMoves);
-                        moves = knightUnit.ValidMoves(input, isInitialized);
+                        _knightUnit = new Knight(UnitColor.White, ProtectKingMoves.ProtectBlackKingMoves, ProtectKingMoves.ProtectWhiteKingMoves, ProtectKingMoves.PotentialWhiteMoves);
+                        moves = _knightUnit.GetValidMoves(input, isInitialized);
                         break;
                 }
                 results.Add(pieceInfo, moves);
@@ -69,34 +66,34 @@ namespace ChessValidator.PiecesLibrary {
         }
         public Dictionary<string, List<int>> GetAllBlackPossibleMovesDict(bool isInitialized) {
             Dictionary<string, List<int>> results = new Dictionary<string, List<int>>();
-            foreach (var item in blackDictionary) {
+            foreach (var item in BlackDictionary) {
                 List<int> moves = new List<int>();
                 string pieceInfo = item.Value + item.Key.ToString();
                 char[] input = pieceInfo.ToCharArray();
                 switch (item.Value) {
                     case "p":
-                        pawnUnit = new Pawn(UnitColor.BLACK, protectKingMoves.ProtectWhiteKingMoves, protectKingMoves.ProtectBlackKingMoves, protectKingMoves.PotentialBlackMoves);
-                        moves = pawnUnit.ValidMoves(input);
+                        _pawnUnit = new Pawn(UnitColor.Black, ProtectKingMoves.ProtectWhiteKingMoves, ProtectKingMoves.ProtectBlackKingMoves, ProtectKingMoves.PotentialBlackMoves);
+                        moves = _pawnUnit.GetValidMoves(input);
                         break;
                     case "q":
-                        queenUnit = new Queen(UnitColor.BLACK, protectKingMoves.ProtectWhiteKingMoves, protectKingMoves.ProtectBlackKingMoves, protectKingMoves.CoverKingMoves, protectKingMoves.PotentialBlackMoves);
-                        moves = queenUnit.ValidMoves(input, isInitialized);
+                        _queenUnit = new Queen(UnitColor.Black, ProtectKingMoves.ProtectWhiteKingMoves, ProtectKingMoves.ProtectBlackKingMoves, ProtectKingMoves.CoverKingMoves, ProtectKingMoves.PotentialBlackMoves);
+                        moves = _queenUnit.GetValidMoves(input, isInitialized);
                         break;
                     case "r":
-                        rookUnit = new Rook(UnitColor.BLACK, protectKingMoves.ProtectWhiteKingMoves, protectKingMoves.ProtectBlackKingMoves, protectKingMoves.CoverKingMoves, protectKingMoves.PotentialBlackMoves);
-                        moves = rookUnit.ValidMoves(input, isInitialized);
+                        _rookUnit = new Rook(UnitColor.Black, ProtectKingMoves.ProtectWhiteKingMoves, ProtectKingMoves.ProtectBlackKingMoves, ProtectKingMoves.CoverKingMoves, ProtectKingMoves.PotentialBlackMoves);
+                        moves = _rookUnit.GetValidMoves(input, isInitialized);
                         break;
                     case "b":
-                        bishopUnit = new Bishop(UnitColor.BLACK, protectKingMoves.ProtectWhiteKingMoves, protectKingMoves.ProtectBlackKingMoves, protectKingMoves.CoverKingMoves, protectKingMoves.PotentialBlackMoves);
-                        moves = bishopUnit.ValidMoves(input, isInitialized);
+                        _bishopUnit = new Bishop(UnitColor.Black, ProtectKingMoves.ProtectWhiteKingMoves, ProtectKingMoves.ProtectBlackKingMoves, ProtectKingMoves.CoverKingMoves, ProtectKingMoves.PotentialBlackMoves);
+                        moves = _bishopUnit.GetValidMoves(input, isInitialized);
                         break;
                     case "k":
-                        kingUnit = new King(UnitColor.BLACK, protectKingMoves.ProtectBlackKingMoves, protectKingMoves.PotentialBlackMoves);
-                        moves = kingUnit.PossibleMoves(input);
+                        _kingUnit = new King(UnitColor.Black, ProtectKingMoves.ProtectBlackKingMoves, ProtectKingMoves.PotentialBlackMoves);
+                        moves = _kingUnit.GetPossibleMoves(input);
                         break;
                     case "n":
-                        knightUnit = new Knight(UnitColor.BLACK, protectKingMoves.ProtectWhiteKingMoves, protectKingMoves.ProtectBlackKingMoves, protectKingMoves.PotentialBlackMoves);
-                        moves = knightUnit.ValidMoves(input, isInitialized);
+                        _knightUnit = new Knight(UnitColor.Black, ProtectKingMoves.ProtectWhiteKingMoves, ProtectKingMoves.ProtectBlackKingMoves, ProtectKingMoves.PotentialBlackMoves);
+                        moves = _knightUnit.GetValidMoves(input, isInitialized);
                         break;
                 }
                 results.Add(pieceInfo, moves);
@@ -106,45 +103,45 @@ namespace ChessValidator.PiecesLibrary {
     }
 
     class AllValidMoves {
-        static AllPossibleMoves possibleMoves = new AllPossibleMoves(true);
-        private static readonly ChessPieces chessPieces = new ChessPieces();
-        private static readonly Dictionary<int, string> whiteDictionary = chessPieces.whiteChessPieces.Item1;
-        private static readonly Dictionary<int, string> blackDictionary = chessPieces.blackChessPieces.Item1;
-        private static Dictionary<string, List<int>> allPossibleWhiteMovesDict;
-        private static Dictionary<string, List<int>> allPossibleBlackMovesDict;
+        static AllPossibleMoves _possibleMoves = new AllPossibleMoves(true);
+        private static readonly ChessPieces ChessPieces = new ChessPieces();
+        private static readonly Dictionary<int, string> WhiteDictionary = ChessPieces.WhiteChessPieces.Item1;
+        private static readonly Dictionary<int, string> BlackDictionary = ChessPieces.BlackChessPieces.Item1;
+        private static Dictionary<string, List<int>> _allPossibleWhiteMovesDict;
+        private static Dictionary<string, List<int>> _allPossibleBlackMovesDict;
 
         public AllValidMoves() {
-            possibleMoves = new AllPossibleMoves(false);
-            allPossibleWhiteMovesDict = possibleMoves.allWhitePossibleMovesDict;
-            allPossibleBlackMovesDict = possibleMoves.allBlackPossibleMovesDict;
+            _possibleMoves = new AllPossibleMoves(false);
+            _allPossibleWhiteMovesDict = _possibleMoves.AllWhitePossibleMovesDict;
+            _allPossibleBlackMovesDict = _possibleMoves.AllBlackPossibleMovesDict;
         }
         public Dictionary<string, List<int>> GetWhiteValidMoves() {
-            var coverKingMoves = AllPossibleMoves.protectKingMoves.CoverKingMoves; // Protect from Potential Threat
-            var protectKingMoves = AllPossibleMoves.protectKingMoves.ProtectWhiteKingMoves; // Protect from Active Threat
-            var enemyPotentialMoves = AllPossibleMoves.protectKingMoves.PotentialBlackMoves;
+            var coverKingMoves = AllPossibleMoves.ProtectKingMoves.CoverKingMoves; // Protect from Potential Threat
+            var protectKingMoves = AllPossibleMoves.ProtectKingMoves.ProtectWhiteKingMoves; // Protect from Active Threat
+            var enemyPotentialMoves = AllPossibleMoves.ProtectKingMoves.PotentialBlackMoves;
 
-            GenerateValidMoves(coverKingMoves, protectKingMoves, whiteDictionary, allPossibleWhiteMovesDict);
+            GetGenerateValidMoves(coverKingMoves, protectKingMoves, WhiteDictionary, _allPossibleWhiteMovesDict);
 
-            HashSet<int> enemyPossibleMovesSet = GetEnemyPossibleMovesSet(allPossibleBlackMovesDict);
+            HashSet<int> enemyPossibleMovesSet = GetEnemyPossibleMovesSet(_allPossibleBlackMovesDict);
 
-            GetKingValidMoves(enemyPotentialMoves, enemyPossibleMovesSet, whiteDictionary, allPossibleWhiteMovesDict);
+            GetKingValidMoves(enemyPotentialMoves, enemyPossibleMovesSet, WhiteDictionary, _allPossibleWhiteMovesDict);
 
-            return allPossibleWhiteMovesDict;
+            return _allPossibleWhiteMovesDict;
         }
         public Dictionary<string, List<int>> GetBlackValidMoves() {
-            var coverKingMoves = AllPossibleMoves.protectKingMoves.CoverKingMoves; // Protect from Potential Threat
-            var protectKingMoves = AllPossibleMoves.protectKingMoves.ProtectBlackKingMoves; // Protect from Active Threat
-            var enemyPotentialMoves = AllPossibleMoves.protectKingMoves.PotentialWhiteMoves;
+            var coverKingMoves = AllPossibleMoves.ProtectKingMoves.CoverKingMoves; // Protect from Potential Threat
+            var protectKingMoves = AllPossibleMoves.ProtectKingMoves.ProtectBlackKingMoves; // Protect from Active Threat
+            var enemyPotentialMoves = AllPossibleMoves.ProtectKingMoves.PotentialWhiteMoves;
 
-            GenerateValidMoves(coverKingMoves, protectKingMoves, blackDictionary, allPossibleBlackMovesDict);
+            GetGenerateValidMoves(coverKingMoves, protectKingMoves, BlackDictionary, _allPossibleBlackMovesDict);
 
-            HashSet<int> enemyPossibleMovesSet = GetEnemyPossibleMovesSet(allPossibleWhiteMovesDict);
+            HashSet<int> enemyPossibleMovesSet = GetEnemyPossibleMovesSet(_allPossibleWhiteMovesDict);
 
-            GetKingValidMoves(enemyPotentialMoves, enemyPossibleMovesSet, blackDictionary, allPossibleBlackMovesDict);
+            GetKingValidMoves(enemyPotentialMoves, enemyPossibleMovesSet, BlackDictionary, _allPossibleBlackMovesDict);
 
-            return allPossibleBlackMovesDict;
+            return _allPossibleBlackMovesDict;
         }
-        private static void GenerateValidMoves(Dictionary<int, List<int>> coverKingMoves, HashSet<int> protectKingMoves, Dictionary<int, string> generalAllyDict, Dictionary<string, List<int>> allPossibleAllyMoveDict) {
+        private static void GetGenerateValidMoves(Dictionary<int, List<int>> coverKingMoves, HashSet<int> protectKingMoves, Dictionary<int, string> generalAllyDict, Dictionary<string, List<int>> allPossibleAllyMoveDict) {
             foreach (var chessPiece in coverKingMoves) {
                 List<int> validMoves = new List<int>();
                 var coord = chessPiece.Key;
@@ -158,7 +155,7 @@ namespace ChessValidator.PiecesLibrary {
                             }
                         }
                     }
-                    allPossibleWhiteMovesDict[pieceInfo] = validMoves;
+                    _allPossibleWhiteMovesDict[pieceInfo] = validMoves;
                 }
             }
         }
