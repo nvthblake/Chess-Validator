@@ -119,12 +119,14 @@ namespace ChessValidator.PiecesLibrary {
             var coverKingMoves = AllPossibleMoves.ProtectKingMoves.CoverKingMoves; // Protect from Potential Threat
             var protectKingMoves = AllPossibleMoves.ProtectKingMoves.ProtectWhiteKingMoves; // Protect from Active Threat
             var enemyPotentialMoves = AllPossibleMoves.ProtectKingMoves.PotentialBlackMoves;
+            
+            HashSet<int> enemyPossibleMovesSet = GetEnemyPossibleMovesSet(_allPossibleBlackMovesDict);
+            
+            GetKingValidMoves(enemyPotentialMoves, enemyPossibleMovesSet, WhiteDictionary, _allPossibleWhiteMovesDict);
 
             GetGenerateValidMoves(coverKingMoves, protectKingMoves, WhiteDictionary, _allPossibleWhiteMovesDict);
 
-            HashSet<int> enemyPossibleMovesSet = GetEnemyPossibleMovesSet(_allPossibleBlackMovesDict);
 
-            GetKingValidMoves(enemyPotentialMoves, enemyPossibleMovesSet, WhiteDictionary, _allPossibleWhiteMovesDict);
 
             return _allPossibleWhiteMovesDict;
         }

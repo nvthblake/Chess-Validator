@@ -58,6 +58,9 @@ namespace ChessValidator.Movements {
                                 protectEnemyKingMoves.Add(originalPosition);
                                 allPossibleMoves.ForEach(item => protectEnemyKingMoves.Add(item));
                                 allPossibleMoves.Add(nextCoordinate);
+                                if (enemyKing/10 < Max && enemyKing % 10 < Max) {
+                                    potentialMoves.Add(enemyKing + 11);
+                                }
                             }
                             else if (numberEnemyPieceEncountered == 1) {
                                 if (!coverKingMoves.ContainsKey(firstEnemyEncountered)) {
@@ -123,6 +126,9 @@ namespace ChessValidator.Movements {
                                 protectEnemyKingMoves.Add(originalPosition);
                                 allPossibleMoves.ForEach(item => protectEnemyKingMoves.Add(item));
                                 allPossibleMoves.Add(nextCoordinate);
+                                if (enemyKing / 10 < Max && enemyKing % 10 > Max) {
+                                    potentialMoves.Add(enemyKing + 9);
+                                }
                             }
                             else if (numberEnemyPieceEncountered == 1) {
                                 if (!coverKingMoves.ContainsKey(firstEnemyEncountered)) {
@@ -187,6 +193,9 @@ namespace ChessValidator.Movements {
                                 protectEnemyKingMoves.Add(originalPosition);
                                 allPossibleMoves.ForEach(item => protectEnemyKingMoves.Add(item));
                                 allPossibleMoves.Add(nextCoordinate);
+                                if (enemyKing / 10 > Min && enemyKing % 10 < Max) {
+                                    potentialMoves.Add(enemyKing - 9);
+                                }
                             }
                             else if (numberEnemyPieceEncountered == 1) {
                                 if (!coverKingMoves.ContainsKey(firstEnemyEncountered)) {
@@ -251,6 +260,9 @@ namespace ChessValidator.Movements {
                                 protectEnemyKingMoves.Add(originalPosition);
                                 allPossibleMoves.ForEach(item => protectEnemyKingMoves.Add(item));
                                 allPossibleMoves.Add(nextCoordinate);
+                                if (enemyKing / 10 > Min && enemyKing % 10 < Min) {
+                                    potentialMoves.Add(enemyKing - 11);
+                                }
                             }
                             else if (numberEnemyPieceEncountered == 1) {
                                 if (!coverKingMoves.ContainsKey(firstEnemyEncountered)) {

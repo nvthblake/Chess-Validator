@@ -67,9 +67,10 @@ namespace ChessValidator.Movements {
                 }
                 possibleMove = forwardLeft;
             }
-            if (allyCoord.Contains(forwardLeft)) {
-                potentialMoves.Add(forwardLeft);
-            }
+            //if (allyCoord.Contains(forwardLeft)) {
+            //    potentialMoves.Add(forwardLeft);
+            //}
+            potentialMoves.Add(forwardLeft);
             if (!isInitialized && protectAllyKingMoves.Any()) {
                 if (!protectAllyKingMoves.Contains(forwardLeft)) {
                     return 0;
@@ -87,9 +88,10 @@ namespace ChessValidator.Movements {
                 }
                 possibleMove = forwardRight;
             }
-            if (allyCoord.Contains(forwardRight)) {
-                potentialMoves.Add(forwardRight);
-            }
+            //if (allyCoord.Contains(forwardRight)) {
+            //    potentialMoves.Add(forwardRight);
+            //}
+            potentialMoves.Add(forwardRight);
             if (!isInitialized && protectAllyKingMoves.Any()) {
                 if (!protectAllyKingMoves.Contains(forwardRight)) {
                     return 0;

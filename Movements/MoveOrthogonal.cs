@@ -3,8 +3,8 @@ using System.Linq;
 
 namespace ChessValidator.Movements {
     class MoveOrthogonal : AdjacentCoordinates, IMoveOrthogonal {
-        private readonly int _min = 1;
-        private readonly int _max = 8;
+        private const int Min = 1;
+        private const int Max = 8;
         private readonly List<int> _allPossibleForwardMoves;
         private readonly List<int> _allPossibleBackwardMoves;
         private readonly List<int> _allPossibleLeftMoves;
@@ -47,7 +47,7 @@ namespace ChessValidator.Movements {
             List<int> allMovesToKing = new List<int> { originalPosition };
 
 
-            while (rowPosition < _max) {
+            while (rowPosition < Max) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     if (!enemyCoord.Contains(nextCoordinate)) {
                         if (numberEnemyPieceEncountered == 0) {
@@ -72,6 +72,9 @@ namespace ChessValidator.Movements {
                                 protectEnemyKingMoves.Add(originalPosition);
                                 _allPossibleForwardMoves.ForEach(item => protectEnemyKingMoves.Add(item));
                                 _allPossibleForwardMoves.Add(nextCoordinate);
+                                if ((enemyKing/10) < Max) {
+                                    potentialMoves.Add(enemyKing + 10);
+                                }
                             }
                             else if (numberEnemyPieceEncountered == 1) {
                                 if (!coverKingMoves.ContainsKey(firstEnemyEncountered)) {
@@ -111,7 +114,7 @@ namespace ChessValidator.Movements {
             List<int> allMovesToKing = new List<int>() { originalPosition };
 
 
-            while (rowPosition > _min) {
+            while (rowPosition > Min) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     if (!enemyCoord.Contains(nextCoordinate)) {
                         if (numberEnemyPieceEncountered == 0) {
@@ -137,6 +140,9 @@ namespace ChessValidator.Movements {
                                 protectEnemyKingMoves.Add(originalPosition);
                                 _allPossibleBackwardMoves.ForEach(item => protectEnemyKingMoves.Add(item));
                                 _allPossibleBackwardMoves.Add(nextCoordinate);
+                                if ((enemyKing / 10) > Min) {
+                                    potentialMoves.Add(enemyKing - 10);
+                                }
                             }
                             else if (numberEnemyPieceEncountered == 1) {
                                 if (!coverKingMoves.ContainsKey(firstEnemyEncountered)) {
@@ -176,7 +182,7 @@ namespace ChessValidator.Movements {
             List<int> allMovesToKing = new List<int> { originalPosition };
 
 
-            while (colPosition < _max) {
+            while (colPosition < Max) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     if (!enemyCoord.Contains(nextCoordinate)) {
                         if (numberEnemyPieceEncountered == 0) {
@@ -202,6 +208,9 @@ namespace ChessValidator.Movements {
                                 protectEnemyKingMoves.Add(originalPosition);
                                 _allPossibleLeftMoves.ForEach(item => protectEnemyKingMoves.Add(item));
                                 _allPossibleLeftMoves.Add(nextCoordinate);
+                                if ((enemyKing % 10) < Max) {
+                                    potentialMoves.Add(enemyKing + 1);
+                                }
                             }
                             else if (numberEnemyPieceEncountered == 1) {
                                 if (!coverKingMoves.ContainsKey(firstEnemyEncountered)) {
@@ -241,7 +250,7 @@ namespace ChessValidator.Movements {
             List<int> allMovesToKing = new List<int> { originalPosition };
 
 
-            while (colPosition > _min) {
+            while (colPosition > Min) {
                 if (!allyCoord.Contains(nextCoordinate)) {
                     if (!enemyCoord.Contains(nextCoordinate)) {
                         if (numberEnemyPieceEncountered == 0) {
@@ -267,6 +276,9 @@ namespace ChessValidator.Movements {
                                 protectEnemyKingMoves.Add(originalPosition);
                                 _allPossibleRightMoves.ForEach(item => protectEnemyKingMoves.Add(item));
                                 _allPossibleRightMoves.Add(nextCoordinate);
+                                if ((enemyKing % 10) > Min) {
+                                    potentialMoves.Add(enemyKing - 1);
+                                }
                             }
                             else if (numberEnemyPieceEncountered == 1) {
                                 if (!coverKingMoves.ContainsKey(firstEnemyEncountered)) {

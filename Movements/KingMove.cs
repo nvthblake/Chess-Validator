@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ChessValidator.Movements {
     class KingMove : AdjacentCoordinates, IKingMove {
@@ -45,7 +46,12 @@ namespace ChessValidator.Movements {
             //        return 0;
             //    }
             //}
-            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
+            //if (protectAllyKingMoves.Any()) {
+            //    if (!protectAllyKingMoves.Contains(possibleMove)) {
+            //        return 0;
+            //    }
+            //}
+            return possibleMove;
         }
 
         public int GetOneBackwardMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
@@ -59,7 +65,12 @@ namespace ChessValidator.Movements {
                     potentialMoves.Add(nextCoordinate);
                 }
             }
-            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
+            //if (protectAllyKingMoves.Any()) {
+            //    if (!protectAllyKingMoves.Contains(possibleMove)) {
+            //        return 0;
+            //    }
+            //}
+            return possibleMove;
         }
 
         public int GetOneLeftMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
@@ -73,7 +84,12 @@ namespace ChessValidator.Movements {
                     potentialMoves.Add(nextCoordinate);
                 }
             }
-            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
+            //if (protectAllyKingMoves.Any()) {
+            //    if (!protectAllyKingMoves.Contains(possibleMove)) {
+            //        return 0;
+            //    }
+            //}
+            return possibleMove;
         }
 
         public int GetOneRightMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
@@ -92,7 +108,12 @@ namespace ChessValidator.Movements {
             //        return 0;
             //    }
             //}
-            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
+            //if (protectAllyKingMoves.Any()) {
+            //    if (!protectAllyKingMoves.Contains(possibleMove)) {
+            //        return 0;
+            //    }
+            //}
+            return possibleMove;
         }
 
         public int GetOneForwardLeftMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
@@ -111,7 +132,12 @@ namespace ChessValidator.Movements {
             //        return 0;
             //    }
             //}
-            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
+            //if (protectAllyKingMoves.Any()) {
+            //    if (!protectAllyKingMoves.Contains(possibleMove)) {
+            //        return 0;
+            //    }
+            //}
+            return possibleMove;
         }
 
         public int GetOneForwardRightMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
@@ -130,7 +156,12 @@ namespace ChessValidator.Movements {
             //        return 0;
             //    }
             //}
-            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
+            //if (protectAllyKingMoves.Any()) {
+            //    if (!protectAllyKingMoves.Contains(possibleMove)) {
+            //        return 0;
+            //    }
+            //}
+            return possibleMove;
         }
 
         public int GetOneBackwardLeftMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
@@ -149,7 +180,12 @@ namespace ChessValidator.Movements {
             //        return 0;
             //    }
             //}
-            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
+            //if (protectAllyKingMoves.Any()) {
+            //    if (!protectAllyKingMoves.Contains(possibleMove)) {
+            //        return 0;
+            //    }
+            //}
+            return possibleMove;
         }
 
         public int GetOneBackwardRightMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves) {
@@ -168,7 +204,12 @@ namespace ChessValidator.Movements {
             //        return 0;
             //    }
             //}
-            return protectAllyKingMoves.Count != 0 && !protectAllyKingMoves.Contains(possibleMove) ? 0 : possibleMove;
+            //if (protectAllyKingMoves.Any()) {
+            //    if (!protectAllyKingMoves.Contains(possibleMove)) {
+            //        return 0;
+            //    }
+            //}
+            return possibleMove;
         }
     }
 }
