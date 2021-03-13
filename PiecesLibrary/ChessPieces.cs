@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 // ReSharper disable ParameterTypeCanBeEnumerable.Local
 
 namespace ChessValidator.PiecesLibrary {
@@ -8,13 +9,12 @@ namespace ChessValidator.PiecesLibrary {
 
         public readonly Tuple<Dictionary<int, string>, HashSet<int>, int> WhiteChessPieces;
         public readonly Tuple<Dictionary<int, string>, HashSet<int>, int> BlackChessPieces;
+        
+        public readonly string[] WhitePieces = Input.WhitePieces.Trim().Split(' ');
+        public readonly string[] BlackPieces = Input.BlackPieces.Trim().Split(' ');
 
-
-        private static readonly string[] Lines = System.IO.File.ReadAllLines(@"D:\Users\nvthblake\Github\Chess-Validator\input.txt");
-        public readonly string[] BlackPieces = Lines[1].Split(' ');
-        public readonly string[] WhitePieces = Lines[0].Split(' ');
-
-        public ChessPieces() {
+        public ChessPieces()
+        {
             WhiteChessPieces = GetPieceAndLocation(WhitePieces);
             BlackChessPieces = GetPieceAndLocation(BlackPieces);
         }

@@ -176,6 +176,7 @@ namespace ChessValidator.PiecesLibrary {
                     }
                 }
             }
+            // loop thru dict, get list 
             foreach (var piece in allPossibleEnemyMovesDict) {
                 foreach (var coordinate in piece.Value) {
                     enemyPossibleMovesSet.Add(coordinate);

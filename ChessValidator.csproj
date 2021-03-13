@@ -34,9 +34,12 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BishopPiece\Bishop.cs" />
+    <Compile Include="ChessBoard.cs" />
+    <Compile Include="Input.cs" />
     <Compile Include="KingPiece\King.cs" />
     <Compile Include="KnightPiece\Knight.cs" />
     <Compile Include="Movements\PawnMove.cs" />
@@ -59,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="input.txt" />
+    <Content Include="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

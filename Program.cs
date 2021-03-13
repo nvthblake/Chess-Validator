@@ -4,27 +4,28 @@ using System.Collections.Generic;
 
 namespace ChessValidator {
     internal static class Program {
-        private static string[,] _chessBoard;
+        private static string[,] _chessBoardArray;
         private static ChessPieces _chessPieces;
         private static AllValidMoves _allValidMoves;
+        private static ChessBoard _chessBoard;
 
         // ReSharper disable once InconsistentNaming
         public static void Main()
         {
             _chessPieces = new ChessPieces();
             _allValidMoves = new AllValidMoves();
-            _chessBoard = new string[8, 8];
+            _chessBoardArray = new string[8, 8];
+            _chessBoard = new ChessBoard();
             do {
                 var allWhitePossibleMoves = _allValidMoves.GetWhiteValidMoves();
                 var allBlackPossibleMoves = _allValidMoves.GetBlackValidMoves();
-                GetPopulateChessboard(); // Populate chessboard array with pieces' inputs from input.txt
-                GetDrawChessBoard(); // Draw up a chessboard using chessboard array
+                _chessBoard.GetPopulateChessboard(_chessBoardArray); // Populate chessboard array with pieces' inputs from input.txt
+                _chessBoard.GetDrawChessBoard(_chessBoardArray); // Draw up a chessboard
                 Console.Write("enter piece location: ");
                 var inputString = Console.ReadLine();
                 var checkedPiece = GetCheckAndGetPiece(inputString);
 
                 if (!string.IsNullOrEmpty(checkedPiece)) {
-                    //char[] inputChar = checkedPiece.ToCharArray();
                     GetValidMoves(checkedPiece, allWhitePossibleMoves, allBlackPossibleMoves);
                 }
 
@@ -44,62 +45,16 @@ namespace ChessValidator {
                 if (item > 0) {
                     var row = item / 10 - 1;
                     var col = item % 10 - 1;
-                    _chessBoard[row, col] = ".";
+                    _chessBoardArray[row, col] = ".";
                 }
             }
-            GetDrawChessBoard();
+            _chessBoard.GetDrawChessBoard(_chessBoardArray);
             Console.WriteLine("All possible moves: ");
             foreach (var item in moves) {
-                Console.Write(item + ", ");
+                if (item != 0)
+                    Console.Write(item + " ");
             }
             Console.WriteLine();
-        }
-        private static void GetPopulateChessboard() {
-            var lines = System.IO.File.ReadAllLines(@"D:\Users\nvthblake\Github\Chess-Validator\input.txt");
-            Console.WriteLine("WHITE: " + lines[0]);
-            Console.WriteLine("BLACK: " + lines[1]);
-
-            var whitePiece = _chessPieces.WhitePieces;
-            var blackPiece = _chessPieces.BlackPieces;
-
-            // Create a 8x8 blank chessBoard array:
-            for (var row = 0; row < 8; row++) {
-                for (var col = 0; col < 8; col++) {
-                    if ((row + col) % 2 == 0) {
-                        _chessBoard[row, col] = " ";
-                    }
-                    else {
-                        _chessBoard[row, col] = " ";
-                    }
-                }
-            }
-
-            foreach (var item in whitePiece) {
-                var charArray = item.ToCharArray();
-                var row = int.Parse(charArray[1].ToString()) - 1;
-                var col = int.Parse(charArray[2].ToString()) - 1;
-                _chessBoard[row, col] = charArray[0].ToString().ToUpper();
-            }
-
-            foreach (var item in blackPiece) {
-                var charArray = item.ToCharArray();
-                var row = int.Parse(charArray[1].ToString()) - 1;
-                var col = int.Parse(charArray[2].ToString()) - 1;
-                _chessBoard[row, col] = charArray[0].ToString().ToLower();
-            }
-        }
-
-        private static void GetDrawChessBoard() {
-            Console.WriteLine("     1   2   3   4   5   6   7   8");
-            Console.WriteLine("   ---------------------------------");
-            for (var row = 0; row < 8; row++) {
-                Console.Write(" " + (row + 1) + " | ");
-                for (var col = 0; col < 8; col++) {
-                    Console.Write(_chessBoard[row, col] + " | ");
-                }
-                Console.WriteLine();
-                Console.WriteLine("   ---------------------------------");
-            }
         }
 
         private static string GetCheckAndGetPiece(string inputString) {
