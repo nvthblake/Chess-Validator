@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
 namespace ChessValidator.Movements {
-    class AdjacentCoordinates : IAdjacentCoordinate {
+    internal class AdjacentCoordinates : IAdjacentCoordinate {
 
         public Coordinate GetAllCoordinates(int rowPosition, int colPosition) {
-            var adjacentCoordinates = new AdjacentCoordinate() {
+            var adjacentCoordinates = new AdjacentCoordinate {
                 ForwardCoordinate = GetForwardCoordinate(rowPosition, colPosition),
                 BackwardCoordinate = GetBackwardCoordinate(rowPosition, colPosition),
                 RightCoordinate = GetRightCoordinate(rowPosition, colPosition),
@@ -37,7 +37,7 @@ namespace ChessValidator.Movements {
         }
 
         public int GetLeftCoordinate(int colPosition, int rowPosition = 0) {
-            return rowPosition * 10 + (colPosition + 1);
+            return rowPosition * 10 + colPosition + 1;
         }
 
         public int GetRightCoordinate(int colPosition, int rowPosition = 0) {
@@ -58,35 +58,35 @@ namespace ChessValidator.Movements {
             return GetBackwardCoordinate(rowPosition) + GetRightCoordinate(colPosition);
         }
 
-        public int GetOneForwardTwoLeftCoordinate(int rowPosition, int colPosition) {
+        protected int GetOneForwardTwoLeftCoordinate(int rowPosition, int colPosition) {
             return GetForwardCoordinate(rowPosition) + GetLeftCoordinate(colPosition) + 1;
         }
 
-        public int GetOneForwardTwoRightCoordinate(int rowPosition, int colPosition) {
+        protected int GetOneForwardTwoRightCoordinate(int rowPosition, int colPosition) {
             return GetForwardCoordinate(rowPosition) + GetRightCoordinate(colPosition) - 1;
         }
 
-        public int GetOneBackwardTwoLeftCoordinate(int rowPosition, int colPosition) {
+        protected int GetOneBackwardTwoLeftCoordinate(int rowPosition, int colPosition) {
             return GetBackwardCoordinate(rowPosition) + GetLeftCoordinate(colPosition) + 1;
         }
 
-        public int GetOneBackwardTwoRightCoordinate(int rowPosition, int colPosition) {
+        protected int GetOneBackwardTwoRightCoordinate(int rowPosition, int colPosition) {
             return GetBackwardCoordinate(rowPosition) + GetRightCoordinate(colPosition) - 1;
         }
 
-        public int GetOneLeftTwoForwardCoordinate(int rowPosition, int colPosition) {
+        protected int GetOneLeftTwoForwardCoordinate(int rowPosition, int colPosition) {
             return GetLeftCoordinate(colPosition) + GetForwardCoordinate(rowPosition) + 10;
         }
 
-        public int GetOneLeftTwoBackwardCoordinate(int rowPosition, int colPosition) {
+        protected int GetOneLeftTwoBackwardCoordinate(int rowPosition, int colPosition) {
             return GetLeftCoordinate(colPosition) + GetBackwardCoordinate(rowPosition) - 10;
         }
 
-        public int GetOneRightTwoForwardCoordinate(int rowPosition, int colPosition) {
+        protected int GetOneRightTwoForwardCoordinate(int rowPosition, int colPosition) {
             return GetRightCoordinate(colPosition) + GetForwardCoordinate(rowPosition) + 10;
         }
 
-        public int GetOneRightTwoBackwardCoordinate(int rowPosition, int colPosition) {
+        protected int GetOneRightTwoBackwardCoordinate(int rowPosition, int colPosition) {
             return GetRightCoordinate(colPosition) + GetBackwardCoordinate(rowPosition) - 10;
         }
     }

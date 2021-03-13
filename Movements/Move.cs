@@ -1,16 +1,18 @@
 ﻿using System.Collections.Generic;
 
 namespace ChessValidator.Movements {
-    class Move {
+    internal class Move {
         public List<int> AllMove;
     }
-    class AllPawnMoves : Move {
+
+    internal class AllPawnMoves : Move {
         public int OneForwardMove { get; set; }
         public int TwoForwardMove { get; set; }
         public int OneForwardLeftMove { get; set; }
         public int OneForwardRightMove { get; set; }
     }
-    class AllKingMoves : Move {
+
+    internal class AllKingMoves : Move {
         public int OneForwardMove { get; set; }
         public int OneBackwardMove { get; set; }
         public int OneLeftMove { get; set; }
@@ -21,7 +23,7 @@ namespace ChessValidator.Movements {
         public int OneBackwardRightMove { get; set; }
     }
 
-    class AllOrthoDiagMoves : Move {
+    internal class AllOrthogonalDiagonalMoves : Move {
         public List<int> AllForwardMoves { get; set; }
         public List<int> AllBackwardMoves { get; set; }
         public List<int> AllLeftMoves { get; set; }
@@ -32,7 +34,7 @@ namespace ChessValidator.Movements {
         public List<int> AllBackwardRightMoves { get; set; }
     }
 
-    class AllKnightMoves : Move {
+    internal class AllKnightMoves : Move {
         public int OneForwardTwoLeft { get; set; }
         public int OneForwardTwoRight { get; set; }
         public int OneBackwardTwoLeft { get; set; }

@@ -1,43 +1,51 @@
 ﻿using System.Collections.Generic;
+// ReSharper disable UnusedMemberInSuper.Global
+// ReSharper disable UnusedMember.Global
 
 namespace ChessValidator.Movements {
-    interface IMovement {
+    internal interface IMovement {
         Move GetAllMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves, HashSet<int> potentialMoves, bool isInitialized);
     }
-    interface IBasicCoordinates {
+
+    internal interface IBasicCoordinates {
         Coordinate GetAllCoordinates(int rowPosition, int colPosition);
     }
-    interface IKingMove {
-        int GetOneForwardMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves);
-        int GetOneBackwardMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves);
-        int GetOneLeftMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves);
-        int GetOneRightMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves);
-        int GetOneForwardLeftMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves);
-        int GetOneForwardRightMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves);
-        int GetOneBackwardLeftMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves);
-        int GetOneBackwardRightMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves);
-        Move GetAllMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves);
+
+    internal interface IKingMove {
+        int GetOneForwardMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> potentialMoves);
+        int GetOneBackwardMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> potentialMoves);
+        int GetOneLeftMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> potentialMoves);
+        int GetOneRightMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> potentialMoves);
+        int GetOneForwardLeftMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> potentialMoves);
+        int GetOneForwardRightMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> potentialMoves);
+        int GetOneBackwardLeftMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> potentialMoves);
+        int GetOneBackwardRightMove(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> potentialMoves);
+        Move GetAllMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> potentialMoves);
     }
-    interface IPawnMove {
-        int GetOneForwardMove(UnitColor unitColor, int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized);
-        int GetTwoForwardMove(UnitColor unitColor, int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized);
-        int GetOneForwardLeftMove(UnitColor unitColor, int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized);
-        int GetOneForwardRightMove(UnitColor unitColor, int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized);
+
+    internal interface IPawnMove {
+        int GetOneForwardMove(UnitColor unitColor, int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, HashSet<int> protectAllyKingMoves, bool isInitialized);
+        int GetTwoForwardMove(UnitColor unitColor, int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, HashSet<int> protectAllyKingMoves, bool isInitialized);
+        int GetOneForwardLeftMove(UnitColor unitColor, int rowPosition, int colPosition, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized);
+        int GetOneForwardRightMove(UnitColor unitColor, int rowPosition, int colPosition, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized);
         Move GetAllMove(UnitColor unitColor, int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized);
     }
-    interface IMoveDiagonal : IMovement {
+
+    internal interface IMoveDiagonal : IMovement {
         List<int> GetAllForwardLeftMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves, HashSet<int> potentialMoves, bool isInitialized);
         List<int> GetAllForwardRightMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves, HashSet<int> potentialMoves, bool isInitialized);
         List<int> GetAllBackwardLeftMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves, HashSet<int> potentialMoves, bool isInitialized);
         List<int> GetAllBackwardRightMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves, HashSet<int> potentialMoves, bool isInitialized);
     }
-    interface IMoveOrthogonal : IMovement {
+
+    internal interface IMoveOrthogonal : IMovement {
         List<int> GetAllForwardMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves, HashSet<int> potentialMoves, bool isInitialized);
         List<int> GetAllBackwardMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves, HashSet<int> potentialMoves, bool isInitialized);
         List<int> GetAllLeftMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves, HashSet<int> potentialMoves, bool isInitialized);
         List<int> GetAllRightMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves, HashSet<int> potentialMoves, bool isInitialized);
     }
-    interface IKnightMove {
+
+    internal interface IKnightMove {
         int GetOneForwardTwoLeft(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized);
         int GetOneForwardTwoRight(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized);
         int GetOneBackwardTwoLeft(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized);
@@ -48,7 +56,8 @@ namespace ChessValidator.Movements {
         int GetOneRightTwoBackward(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized);
         Move GetAllMoves(int rowPosition, int colPosition, HashSet<int> allyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized);
     }
-    interface IAdjacentCoordinate : IBasicCoordinates {
+
+    internal interface IAdjacentCoordinate : IBasicCoordinates {
         int GetForwardCoordinate(int rowPosition, int colPosition = 0);
         int GetBackwardCoordinate(int rowPosition, int colPosition = 0);
         int GetLeftCoordinate(int colPosition, int rowPosition = 0);

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+// ReSharper disable NotAccessedField.Global
 
 namespace ChessValidator.Movements {
-    class Coordinate {
+    internal class Coordinate {
         public List<int> AllCoordinates;
     }
 
-    class AdjacentCoordinate : Coordinate {
+    internal class AdjacentCoordinate : Coordinate {
         public int ForwardCoordinate { get; set; }
         public int BackwardCoordinate { get; set; }
         public int LeftCoordinate { get; set; }

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+// ReSharper disable ParameterTypeCanBeEnumerable.Local
 
 namespace ChessValidator.PiecesLibrary {
     internal class ChessPieces {
 
-        public Tuple<Dictionary<int, string>, HashSet<int>, int> WhiteChessPieces;
-        public Tuple<Dictionary<int, string>, HashSet<int>, int> BlackChessPieces;
+        public readonly Tuple<Dictionary<int, string>, HashSet<int>, int> WhiteChessPieces;
+        public readonly Tuple<Dictionary<int, string>, HashSet<int>, int> BlackChessPieces;
 
 
         private static readonly string[] Lines = System.IO.File.ReadAllLines(@"D:\Users\nvthblake\Github\Chess-Validator\input.txt");
@@ -18,7 +19,7 @@ namespace ChessValidator.PiecesLibrary {
             BlackChessPieces = GetPieceAndLocation(BlackPieces);
         }
 
-        public Dictionary<int, string> GetPiecesDictionary(string[] pieces) {
+        private static Dictionary<int, string> GetPiecesDictionary(string[] pieces) {
             var locationDictionary = new Dictionary<int, string>();
             foreach (var item in pieces) {
                 var coordinate = int.Parse(item.Substring(1));
@@ -28,7 +29,7 @@ namespace ChessValidator.PiecesLibrary {
             return locationDictionary;
         }
 
-        public HashSet<int> GetLocations(string[] pieces) {
+        private static HashSet<int> GetLocations(string[] pieces) {
             var coordinates = new HashSet<int>();
             foreach (var item in pieces) {
                 var coordinate = int.Parse(item.Substring(1));
@@ -37,11 +38,11 @@ namespace ChessValidator.PiecesLibrary {
             return coordinates;
         }
 
-        public int GetKingCoordinate(Dictionary<int, string> pieceDictionary) {
+        private static int GetKingCoordinate(Dictionary<int, string> pieceDictionary) {
             return pieceDictionary.FirstOrDefault(x => x.Value == "k").Key;
         }
 
-        private Tuple<Dictionary<int, string>, HashSet<int>, int> GetPieceAndLocation(string[] pieces) {
+        private static Tuple<Dictionary<int, string>, HashSet<int>, int> GetPieceAndLocation(string[] pieces) {
             var pieceDictionary = GetPiecesDictionary(pieces);
             var pieceLocation = GetLocations(pieces);
             var enemyKingLocation = GetKingCoordinate(pieceDictionary);

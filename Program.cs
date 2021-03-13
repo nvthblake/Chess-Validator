@@ -3,16 +3,20 @@ using System;
 using System.Collections.Generic;
 
 namespace ChessValidator {
-    class Program {
+    internal static class Program {
         private static string[,] _chessBoard;
-        private static readonly ChessPieces ChessPieces = new ChessPieces();
-        private static readonly AllValidMoves AllValidMoves = new AllValidMoves();
+        private static ChessPieces _chessPieces;
+        private static AllValidMoves _allValidMoves;
 
-        private static void Main(string[] arg) {
+        // ReSharper disable once InconsistentNaming
+        public static void Main()
+        {
+            _chessPieces = new ChessPieces();
+            _allValidMoves = new AllValidMoves();
             _chessBoard = new string[8, 8];
             do {
-                var allWhitePossibleMoves = AllValidMoves.GetWhiteValidMoves();
-                var allBlackPossibleMoves = AllValidMoves.GetBlackValidMoves();
+                var allWhitePossibleMoves = _allValidMoves.GetWhiteValidMoves();
+                var allBlackPossibleMoves = _allValidMoves.GetBlackValidMoves();
                 GetPopulateChessboard(); // Populate chessboard array with pieces' inputs from input.txt
                 GetDrawChessBoard(); // Draw up a chessboard using chessboard array
                 Console.Write("enter piece location: ");
@@ -38,8 +42,8 @@ namespace ChessValidator {
             // Draw up all possible moves on chessboard array
             foreach (var item in moves) {
                 if (item > 0) {
-                    var row = (item / 10) - 1;
-                    var col = (item % 10) - 1;
+                    var row = item / 10 - 1;
+                    var col = item % 10 - 1;
                     _chessBoard[row, col] = ".";
                 }
             }
@@ -51,16 +55,16 @@ namespace ChessValidator {
             Console.WriteLine();
         }
         private static void GetPopulateChessboard() {
-            string[] lines = System.IO.File.ReadAllLines(@"D:\Users\nvthblake\Github\Chess-Validator\input.txt");
+            var lines = System.IO.File.ReadAllLines(@"D:\Users\nvthblake\Github\Chess-Validator\input.txt");
             Console.WriteLine("WHITE: " + lines[0]);
             Console.WriteLine("BLACK: " + lines[1]);
 
-            var whitePiece = ChessPieces.WhitePieces;
-            var blackPiece = ChessPieces.BlackPieces;
+            var whitePiece = _chessPieces.WhitePieces;
+            var blackPiece = _chessPieces.BlackPieces;
 
             // Create a 8x8 blank chessBoard array:
-            for (int row = 0; row < 8; row++) {
-                for (int col = 0; col < 8; col++) {
+            for (var row = 0; row < 8; row++) {
+                for (var col = 0; col < 8; col++) {
                     if ((row + col) % 2 == 0) {
                         _chessBoard[row, col] = " ";
                     }
@@ -88,9 +92,9 @@ namespace ChessValidator {
         private static void GetDrawChessBoard() {
             Console.WriteLine("     1   2   3   4   5   6   7   8");
             Console.WriteLine("   ---------------------------------");
-            for (int row = 0; row < 8; row++) {
+            for (var row = 0; row < 8; row++) {
                 Console.Write(" " + (row + 1) + " | ");
-                for (int col = 0; col < 8; col++) {
+                for (var col = 0; col < 8; col++) {
                     Console.Write(_chessBoard[row, col] + " | ");
                 }
                 Console.WriteLine();
@@ -99,17 +103,17 @@ namespace ChessValidator {
         }
 
         private static string GetCheckAndGetPiece(string inputString) {
-            var blackDictionary = ChessPieces.BlackChessPieces.Item1;
-            var whiteDictionary = ChessPieces.WhiteChessPieces.Item1;
+            var blackDictionary = _chessPieces.BlackChessPieces.Item1;
+            var whiteDictionary = _chessPieces.WhiteChessPieces.Item1;
 
-            string inputPiece = inputString.Substring(0, 1);
-            int inputCoordinate = int.Parse(inputString.Substring(1));
+            var inputPiece = inputString.Substring(0, 1);
+            var inputCoordinate = int.Parse(inputString.Substring(1));
 
             if (blackDictionary.ContainsKey(inputCoordinate) && blackDictionary[inputCoordinate].ToLower() == inputPiece.ToLower()) {
-                return inputPiece.ToLower() + inputCoordinate.ToString();
+                return inputPiece.ToLower() + inputCoordinate;
             }
-            else if (whiteDictionary.ContainsKey(inputCoordinate) && whiteDictionary[inputCoordinate].ToLower() == inputPiece.ToLower()) {
-                return inputPiece.ToLower() + inputCoordinate.ToString();
+            if (whiteDictionary.ContainsKey(inputCoordinate) && whiteDictionary[inputCoordinate].ToLower() == inputPiece.ToLower()) {
+                return inputPiece.ToLower() + inputCoordinate;
             }
 
             return string.Empty;

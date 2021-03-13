@@ -37,7 +37,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BishopPiece\Bishop.cs" />
-    <Compile Include="ChessBoard.cs" />
     <Compile Include="KingPiece\King.cs" />
     <Compile Include="KnightPiece\Knight.cs" />
     <Compile Include="Movements\PawnMove.cs" />

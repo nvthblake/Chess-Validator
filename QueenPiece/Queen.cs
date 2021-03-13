@@ -1,12 +1,11 @@
 ﻿using ChessValidator.Movements;
 using ChessValidator.PiecesLibrary;
-using System;
 using System.Collections.Generic;
 
 namespace ChessValidator.QueenPiece {
-    class Queen {
-        private readonly IMoveOrthogonal _imoveOrthogonal;
-        private readonly IMoveDiagonal _imoveDiagonal;
+    internal class Queen {
+        private readonly IMoveOrthogonal _iMoveOrthogonal;
+        private readonly IMoveDiagonal _iMoveDiagonal;
         private readonly int _enemyKing;
         private readonly HashSet<int> _protectEnemyKingMoves;
         private readonly HashSet<int> _protectAllyKingMoves;
@@ -14,15 +13,15 @@ namespace ChessValidator.QueenPiece {
         private readonly HashSet<int> _potentialMoves;
 
         public Queen(UnitColor unitColor, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, Dictionary<int, List<int>> coverKingMoves, HashSet<int> potentialMoves) {
-            _imoveOrthogonal = new MoveOrthogonal();
-            _imoveDiagonal = new MoveDiagonal();
+            _iMoveOrthogonal = new MoveOrthogonal();
+            _iMoveDiagonal = new MoveDiagonal();
             _allyCoord = UnitColor.White == unitColor ? ChessPieces.WhiteChessPieces.Item2 : ChessPieces.BlackChessPieces.Item2;
             _enemyCoord = UnitColor.White == unitColor ? ChessPieces.BlackChessPieces.Item2 : ChessPieces.WhiteChessPieces.Item2;
             _enemyKing = UnitColor.White == unitColor ? ChessPieces.BlackChessPieces.Item3 : ChessPieces.WhiteChessPieces.Item3;
-            this._protectEnemyKingMoves = protectEnemyKingMoves;
-            this._protectAllyKingMoves = protectAllyKingMoves;
-            this._coverKingMoves = coverKingMoves;
-            this._potentialMoves = potentialMoves;
+            _protectEnemyKingMoves = protectEnemyKingMoves;
+            _protectAllyKingMoves = protectAllyKingMoves;
+            _coverKingMoves = coverKingMoves;
+            _potentialMoves = potentialMoves;
         }
 
         private readonly HashSet<int> _allyCoord;
@@ -37,8 +36,8 @@ namespace ChessValidator.QueenPiece {
             var rowPosition = int.Parse(piecePosition[1].ToString());
             var colPosition = int.Parse(piecePosition[2].ToString());
 
-            var orthogonalMoves = _imoveOrthogonal.GetAllMoves(rowPosition, colPosition, _allyCoord, _enemyCoord, _enemyKing, _protectEnemyKingMoves, _protectAllyKingMoves, _coverKingMoves, _potentialMoves, isInitialized);
-            var diagonalMoves = _imoveDiagonal.GetAllMoves(rowPosition, colPosition, _allyCoord, _enemyCoord, _enemyKing, _protectEnemyKingMoves, _protectAllyKingMoves, _coverKingMoves, _potentialMoves, isInitialized);
+            var orthogonalMoves = _iMoveOrthogonal.GetAllMoves(rowPosition, colPosition, _allyCoord, _enemyCoord, _enemyKing, _protectEnemyKingMoves, _protectAllyKingMoves, _coverKingMoves, _potentialMoves, isInitialized);
+            var diagonalMoves = _iMoveDiagonal.GetAllMoves(rowPosition, colPosition, _allyCoord, _enemyCoord, _enemyKing, _protectEnemyKingMoves, _protectAllyKingMoves, _coverKingMoves, _potentialMoves, isInitialized);
             diagonalMoves.AllMove.ForEach(item => _results.Add(item));
             orthogonalMoves.AllMove.ForEach(item => _results.Add(item));
 

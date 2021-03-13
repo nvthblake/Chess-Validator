@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
 namespace ChessValidator.Movements {
-    class ProtectKingMoves {
-        public HashSet<int> ProtectWhiteKingMoves { get; set; }
-        public HashSet<int> ProtectBlackKingMoves { get; set; }
-        public Dictionary<int, List<int>> CoverKingMoves { get; set; }
-        public HashSet<int> PotentialBlackMoves { get; set; }
-        public HashSet<int> PotentialWhiteMoves { get; set; }
+    internal class ProtectKingMoves {
+        public HashSet<int> ProtectWhiteKingMoves { get; }
+        public HashSet<int> ProtectBlackKingMoves { get; }
+        public Dictionary<int, List<int>> CoverKingMoves { get; }
+        public HashSet<int> PotentialBlackMoves { get; }
+        public HashSet<int> PotentialWhiteMoves { get; }
 
         public ProtectKingMoves() {
             ProtectWhiteKingMoves = new HashSet<int>();
