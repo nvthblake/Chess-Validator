@@ -44,6 +44,11 @@ namespace ChessValidator {
                 }
             }
             GetDrawChessBoard();
+            Console.WriteLine("All possible moves: ");
+            foreach (var item in moves) {
+                Console.Write(item + ", ");
+            }
+            Console.WriteLine();
         }
         private static void GetPopulateChessboard() {
             string[] lines = System.IO.File.ReadAllLines(@"D:\Users\nvthblake\Github\Chess-Validator\input.txt");

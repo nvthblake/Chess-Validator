@@ -187,10 +187,12 @@ namespace ChessValidator.PiecesLibrary {
         private static void GetKingValidMoves(HashSet<int> enemyPotentialMoves, HashSet<int> enemyPossibleMovesSet, Dictionary<int, string> generalAllyDict, Dictionary<string, List<int>> allPossibleAllyMovesDict) {
             List<int> kingsValidMoves = new List<int>();
             var kingCoord = "k" + generalAllyDict.FirstOrDefault(x => x.Value == "k").Key.ToString();
-            var allyKingPossibleMoves = allPossibleAllyMovesDict[kingCoord];
-            foreach (var item in allyKingPossibleMoves) {
-                if (!enemyPossibleMovesSet.Contains(item) && !enemyPotentialMoves.Contains(item)) {
-                    kingsValidMoves.Add(item);
+            if (kingCoord != "k0") {
+                var allyKingPossibleMoves = allPossibleAllyMovesDict[kingCoord];
+                foreach (var item in allyKingPossibleMoves) {
+                    if (!enemyPossibleMovesSet.Contains(item) && !enemyPotentialMoves.Contains(item)) {
+                        kingsValidMoves.Add(item);
+                    }
                 }
             }
             allPossibleAllyMovesDict[kingCoord] = kingsValidMoves;

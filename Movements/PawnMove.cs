@@ -26,47 +26,46 @@ namespace ChessValidator.Movements {
 
         public int GetOneForwardMove(UnitColor unitColor, int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized = false) {
             var forward = unitColor == UnitColor.White ? GetForwardCoordinate(rowPosition, colPosition) : GetBackwardCoordinate(rowPosition, colPosition);
-
+            var possibleMove = 0;
             if (rowPosition == Max || rowPosition == Min) return 0;
             if (!allyCoord.Contains(forward) && !enemyCoord.Contains(forward)) {
-                return forward;
+                possibleMove = forward;
             }
             if (!isInitialized && protectAllyKingMoves.Any()) {
                 if (!protectAllyKingMoves.Contains(forward)) {
                     return 0;
                 }
-                return forward;
             }
-            return 0;
+            return possibleMove;
         }
         public int GetTwoForwardMove(UnitColor unitColor, int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized = false) {
             var forward = unitColor == UnitColor.White ? GetForwardCoordinate(rowPosition, colPosition) : GetBackwardCoordinate(rowPosition, colPosition);
             var forwardTwo = unitColor == UnitColor.White ? GetForwardCoordinate(rowPosition, colPosition) + 10 : GetBackwardCoordinate(rowPosition, colPosition) - 10;
             int startLine = unitColor == UnitColor.White ? 2 : 7;
-
+            var possibleMove = 0;
             if (rowPosition == Max || rowPosition == Min) return 0;
             if (!allyCoord.Contains(forward) && !enemyCoord.Contains(forward)) {
                 if (rowPosition == startLine) {
                     if (!allyCoord.Contains(forwardTwo) && !enemyCoord.Contains(forwardTwo))
-                        return forwardTwo;
+                        possibleMove = forwardTwo;
                 }
             }
             if (!isInitialized && protectAllyKingMoves.Any()) {
-                if (!protectAllyKingMoves.Contains(forward)) {
+                if (!protectAllyKingMoves.Contains(forwardTwo)) {
                     return 0;
                 }
-                return forward;
             }
-            return 0;
+            return possibleMove;
         }
         public int GetOneForwardLeftMove(UnitColor unitColor, int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized = false) {
             var forwardLeft = unitColor == UnitColor.White ? GetForwardLeftCoordinate(rowPosition, colPosition) : GetBackwardLeftCoordinate(rowPosition, colPosition);
             var originalPosition = rowPosition * 10 + colPosition;
+            var possibleMove = 0;
             if (enemyCoord.Contains(forwardLeft)) {
                 if (forwardLeft == enemyKing) {
                     protectEnemyKingMoves.Add(originalPosition);
                 }
-                return forwardLeft;
+                possibleMove = forwardLeft;
             }
             if (allyCoord.Contains(forwardLeft)) {
                 potentialMoves.Add(forwardLeft);
@@ -75,18 +74,18 @@ namespace ChessValidator.Movements {
                 if (!protectAllyKingMoves.Contains(forwardLeft)) {
                     return 0;
                 }
-                return forwardLeft;
             }
-            return 0;
+            return possibleMove;
         }
         public int GetOneForwardRightMove(UnitColor unitColor, int rowPosition, int colPosition, HashSet<int> allyCoord, HashSet<int> enemyCoord, int enemyKing, HashSet<int> protectEnemyKingMoves, HashSet<int> protectAllyKingMoves, HashSet<int> potentialMoves, bool isInitialized = false) {
             var forwardRight = unitColor == UnitColor.White ? GetForwardRightCoordinate(rowPosition, colPosition) : GetBackwardRightCoordinate(rowPosition, colPosition);
             var originalPosition = rowPosition * 10 + colPosition;
+            var possibleMove = 0;
             if (enemyCoord.Contains(forwardRight)) {
                 if (forwardRight == enemyKing) {
                     protectEnemyKingMoves.Add(originalPosition);
                 }
-                return forwardRight;
+                possibleMove = forwardRight;
             }
             if (allyCoord.Contains(forwardRight)) {
                 potentialMoves.Add(forwardRight);
@@ -95,9 +94,8 @@ namespace ChessValidator.Movements {
                 if (!protectAllyKingMoves.Contains(forwardRight)) {
                     return 0;
                 }
-                return forwardRight;
             }
-            return 0;
+            return possibleMove;
         }
     }
 }
